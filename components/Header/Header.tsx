@@ -1,25 +1,27 @@
 import React from "react";
-import style from "./style.module.css";
-
+import Link from "next/link";
 import settings from "../../settings";
-
-const links = settings.navbar_links;
 
 const Header: React.FC = () => {
   return (
-    <header className={style.header}>
-      <div id="top"></div>
-      <div className="wrapper">
+    <header>
+      <div className="container">
+        <Link href="/" style={{ fontWeight: 'bold', fontSize: '1.2rem', color: '#333' }}>
+          BRodrigue
+        </Link>
         <nav>
-          {links.map((link: any, index: number) => (
-            <a
-              className={`${style.link} fill-button`}
+          {settings.navbar_links.map((link: any, index: number) => (
+            <Link
               key={index}
               href={link.to}
+              style={{ color: '#333' }}
             >
               {link.title}
-            </a>
+            </Link>
           ))}
+          <a href="/resume.pdf" style={{ fontWeight: 'bold' }}>
+            Resume
+          </a>
         </nav>
       </div>
     </header>

@@ -1,30 +1,22 @@
-import Link from "next/link";
 import React from "react";
-import { BsGithub, BsLinkedin } from "react-icons/bs";
-import settings from "../../settings";
-import Section from "../Section";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
-
-const links = settings.navbar_links;
-
-const Header: React.FC = () => {
+const Footer: React.FC = () => {
     return (
         <footer>
-            <Section>
-                <h1 id="social">Thanks for the visit</h1>
-                <small>Follow me on social media</small>
-                <div className="social-links">
-                    <Link passHref href="https://www.linkedin.com/in/rachid-rodrigue-badini-688a92186/">
-                        <BsLinkedin />
-                    </Link>
-                    <Link passHref href="https://github.com/bsrodrigue">
-                        <BsGithub />
-                    </Link>
+            <div className="container">
+                <p>© {new Date().getFullYear()} BRodrigue. All rights reserved.</p>
+                <div style={{ marginTop: '1rem', fontSize: '1.5rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+                    <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                        <FaLinkedin />
+                    </a>
+                    <a href="https://github.com/bsrodrigue" target="_blank" rel="noreferrer">
+                        <FaGithub />
+                    </a>
                 </div>
-                <p>© 2021-2023 b-rodrigue.com</p>
-            </Section>
+            </div>
         </footer>
     );
 };
 
-export default Header;
+export default Footer;

@@ -28,7 +28,7 @@ const services: Service[] = [
 const portfolioProjects: PortfolioProject[] = [
   // Vanilla (HTML, CSS, Javascript)
   {
-    cover: require("./public/images/projects/afrosound.webp"),
+    cover: "/images/projects/afrosound.webp",
     title: "AfroSound",
     description:
       "I built this single page in vanilla html, some bootstrap and javascript to get a better grasp of the base web technologies. I believe this was the foundation of my current frontend skills.",
@@ -36,7 +36,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "vanilla",
   },
   {
-    cover: require("./public/images/projects/hiredev.webp"),
+    cover: "/images/projects/hiredev.webp",
     title: "Hire A Dev",
     description:
       "After building Afrosound, I wanted some new challenge by building a better looking static website. It led to this fun project where I built a nice looking page with bootstrap and jquery.",
@@ -44,7 +44,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "vanilla",
   },
   {
-    cover: require("./public/images/projects/gameyaar.webp"),
+    cover: "/images/projects/gameyaar.webp",
     title: "Gameyaar",
     description:
       "I am a huge fan of video games, and this is probably my favourite static web page. For this one, I wanted an even bigger challenge, and decided not to rely on bootstrap. I am proud of the result and even used a library called 'Tilt.js' to add an awesome tilting effect on hover.",
@@ -55,7 +55,7 @@ const portfolioProjects: PortfolioProject[] = [
 
   // React
   {
-    cover: require("./public/images/projects/otapix.png"),
+    cover: "/images/projects/otapix.png",
     title: "Otapix",
     description:
       "This is an online game to play a variant of 4Images1Word, a famous mobile game where you have to guess the correct word by looking the four hint images. This one took me a lot of work and taught me the importance of clean code and planning. I use firebase as the backend and Next.js on the UI side",
@@ -63,7 +63,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "react",
   },
   {
-    cover: require("./public/images/projects/pomodoomer.png"),
+    cover: "/images/projects/pomodoomer.png",
     title: "Pomodoomer",
     description:
       "I sometimes use the Pomodoro technique while coding, and I wondered if I could build my own. It made me realize that working with timers can be tricky, but it turned out fine.",
@@ -71,7 +71,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "react",
   },
   {
-    cover: require("./public/images/projects/brodrigue.png"),
+    cover: "/images/projects/brodrigue.png",
     title: "BRodrigue",
     description:
       "Some developers prefer using a prebuilt website or template for their portfolio. I prefer quality handmade goods with ❤️",
@@ -79,7 +79,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "react",
   },
   {
-    cover: require("./public/images/projects/gamosyaar.png"),
+    cover: "/images/projects/gamosyaar.png",
     title: "Gamos Yaar",
     description:
       "A fun little project: A car searching web application leveraging a complete public car API. It is built using Next.js 13 and Tailwind",
@@ -87,7 +87,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "react",
   },
   {
-    cover: require("./public/images/projects/gandyam.png"),
+    cover: "/images/projects/gandyam.png",
     title: "Gandyam Pay",
     description:
       "This is a website I've built for an employer at Gandyam Ligdi, a fintech company based in Burkina Faso. They wanted a nice looking website for their latest money transfer mobile application. I built it with React and Material UI along with Framer Motion for animations.",
@@ -95,7 +95,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "react",
   },
   {
-    cover: require("./public/images/projects/dyswis.png"),
+    cover: "/images/projects/dyswis.png",
     title: "Dyswis Web",
     description:
       "DYSWIS (Do You See What I See) was my first projects at N7-Studio, a canadian software company. The crux of my work was to implement the UI of the registration pages, integrate a Stripe payment process and a customer dashboard to manage their subscriptions",
@@ -106,7 +106,7 @@ const portfolioProjects: PortfolioProject[] = [
 
   // React Native
   {
-    cover: require("./public/images/projects/dyswis-mobile.png"),
+    cover: "/images/projects/dyswis-mobile.png",
     title: "Dyswis Mobile",
     description:
       "This is the mobile version of the Dyswis platform I worked on during my days at N7-Studio. It was a very interesting project and we leveraged Expo to make the development process faster. I learned about GraphQL and NX monorepos",
@@ -114,7 +114,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "react-native",
   },
   {
-    cover: require("./public/images/projects/gandyam_wallet.png"),
+    cover: "/images/projects/gandyam_wallet.png",
     title: "Gandyam Pay Wallet",
     description:
       "I am currently working on this mobile application at Gandyam Ligdi. As the name suggests, it is a mobile wallet built to facilitate transactions and money transfers in Africa.",
@@ -122,7 +122,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "react-native",
   },
   {
-    cover: require("./public/images/projects/bibliobooks.png"),
+    cover: "/images/projects/bibliobooks.png",
     title: "Bibliobooks Mobile",
     description:
       "Not only am I a technology enthusiast, but I am also an avid reader. I wanted to develop my own book writing and reading application. I took inspiration from Wattpad. Here again, I use Expo. My backend is written in Nest.js and file upload and storage is handled by firebase firestore.",
@@ -130,7 +130,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "react-native",
   },
   {
-    cover: require("./public/images/projects/nativejobs.png"),
+    cover: "/images/projects/nativejobs.png",
     title: "Native Jobs",
     description:
       "Job searching is an important part in the life of a Software Engineer, but most of jobseeking websites are bloated. I wanted a simple, beautiful app that would help me look for React & React Native jobs easily.",
@@ -141,7 +141,7 @@ const portfolioProjects: PortfolioProject[] = [
 
   // C/c++ 
   {
-    cover: require("./public/images/projects/beanlang.png"),
+    cover: "/images/projects/beanlang.png",
     title: "Beanlang",
     description:
       "I've always wondered how programming languages are made. I didn't shy away and took a deep plunge in the compiler and interpreter design world. It really changed my perspective about programming and motivated me to learn even more. Here is a simple interpreter written in C",
@@ -149,7 +149,7 @@ const portfolioProjects: PortfolioProject[] = [
     stack: "c",
   },
   {
-    cover: require("./public/images/projects/hacc.gif"),
+    cover: "/images/projects/hacc.gif",
     title: "Auto Hacker",
     description:
       "A small video game that I'm still building in C/C++",
@@ -180,6 +180,10 @@ const navbar_links = [
     to: "/#social",
   },
   {
+    title: "Blog",
+    to: "/blog",
+  },
+  {
     title: "Github",
     to: "https://github.com/bsrodrigue",
   },
@@ -191,11 +195,27 @@ const actuality = [
   "I enjoy life",
 ];
 
+const skills = [
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Node.js",
+  "Express",
+  "PostgreSQL",
+  "Tailwind CSS",
+  "React Native",
+  "C/C++",
+  "Git",
+  "Docker",
+  "Figma",
+];
+
 const settings = {
   portfolioProjects,
   services,
   navbar_links,
   actuality,
+  skills,
 };
 
 export default settings;

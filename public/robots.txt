@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://b-rodrigue.com
+
+# Sitemaps
+Sitemap: https://b-rodrigue.com/sitemap.xml

@@ -1,67 +1,54 @@
 import React from "react";
-import Portfolio from "../components/Portfolio";
-import Section from "../components/Section";
+import Head from "next/head";
 import settings from "../settings";
 
 const { portfolioProjects } = settings;
 
-const vanillaProjects = portfolioProjects.filter((project) => {
-    return project.stack === 'vanilla';
-})
-
-const reactProjects = portfolioProjects.filter((project) => {
-    return project.stack === 'react';
-})
-
-const cProjects = portfolioProjects.filter((project) => {
-    return project.stack === 'c';
-})
-
-const reactNativeProjects = portfolioProjects.filter((project) => {
-    return project.stack === 'react-native';
-})
+const categories = [
+    { id: 'react', title: 'React & Next.js Projects', description: 'Modern web applications built with React and Next.js.' },
+    { id: 'react-native', title: 'React Native Mobile Projects', description: 'Cross-platform mobile applications.' },
+    { id: 'vanilla', title: 'Vanilla Projects', description: 'Foundational projects built with HTML, CSS, and JavaScript.' },
+    { id: 'c', title: 'C/C++ Projects', description: 'Low-level programming and system tools.' },
+];
 
 const PortfolioPage: React.FC = () => {
     return (
         <>
-            <Section background="bg-white" >
-                <h1>My Portfolio</h1>
-            </Section>
+            <Head>
+                <title>Portfolio | BRodrigue</title>
+            </Head>
+            <section style={{ paddingTop: '4rem' }}>
+                <div className="container">
+                    <h1 style={{ textAlign: 'center' }}>My Portfolio</h1>
+                    <p style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto 4rem auto', color: '#666' }}>
+                        A collection of my work across different technologies and platforms.
+                    </p>
 
-            <Section background="bg-white">
-                <Portfolio
-                    title="Vanilla Projects"
-                    description="This is the entrypoint of my career as a developer, I started out building a solid foundation of basic frontend technologies used on the web.
-                    I quickly absorbed documentation about HTML, CSS and Javascript and tried to apply what I learned by building simple, but beautiful static web pages.
-                    All of the projects here are personal and not related to any employer or client.
-                    "
-                    projects={vanillaProjects} />
-            </Section>
+                    {categories.map((category) => {
+                        const projects = portfolioProjects.filter(p => p.stack === category.id);
+                        if (projects.length === 0) return null;
 
-            <Section background="bg-white">
-                <Portfolio
-                    title="React & Next.js Projects"
-                    description="This is where the real fun actually starts. I deeply learned the workings of the famous React library and started building more complex projects.
-                    This is what got me hired and got me started as a Frontend developer. Very soon I picked up the excellent React Meta Framework called Next.js! I've already built
-                    impressive projects with it."
-                    projects={reactProjects} />
-            </Section>
-
-            <Section background="bg-white" >
-                <Portfolio
-                    title="React Native Mobile Projects"
-                    description="After working a lot with web technologies, I wished to become a mobile developer. React Native was the perfect choice for me and my employers. I have worked on complex enough UI screens and components and leverage the powerful Expo tool to streamline my app development process."
-                    projects={reactNativeProjects} />
-            </Section>
-
-            <Section background="bg-white" >
-                <Portfolio
-                    title="C/C++ Projects"
-                    description="As a developer I am conviced that in the long run, those who have a solid foundation of the inner workings of their tools and computer science will have more exciting opportunities, also, I was always passionate by learning how things work under the hood. 
-                    I just do not wish to be a simple user of higher level tools, I want to contribute to the industry and have the freedom of choice to build my own tools when needed. Therefore I am learning more complex topics and building tools for my own curiosity and use.
-                    "
-                    projects={cProjects} />
-            </Section>
+                        return (
+                            <div key={category.id} style={{ marginBottom: '4rem' }}>
+                                <h2>{category.title}</h2>
+                                <p style={{ marginBottom: '2rem', color: '#666' }}>{category.description}</p>
+                                <div className="projects-grid">
+                                    {projects.map((project, index) => (
+                                        <div key={index} className="project-card">
+                                            <img src={project.cover} alt={project.title} />
+                                            <h3>{project.title}</h3>
+                                            <p>{project.description}</p>
+                                            <a href={project.link} target="_blank" rel="noreferrer">
+                                                View Project &rarr;
+                                            </a>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </section>
         </>
     );
 };

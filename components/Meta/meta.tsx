@@ -12,8 +12,8 @@ const Meta = ({ title, keywords, description }) => {
         content={keywords}
       />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="msapplication-TileColor" content="#5000ff" />
-      <meta name="theme-color" content="#5000ff" />
+      <meta name="msapplication-TileColor" content="#4F46E5" />
+      <meta name="theme-color" content="#4F46E5" />
 
       <title>{title}</title>
     </Head>
