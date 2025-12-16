@@ -1,0 +1,12 @@
+export { default as ContactForm } from './ContactForm';
+export { default as Footer } from './Footer';
+export { default as Header } from './Header';
+export { default as Portfolio } from './Portfolio';
+export { default as ProfilePicture } from './ProfilePicture';
+export { default as ContentCard } from './ContentCard';
+export { default as Section } from './Section';
+export { default as ServiceCard } from './ServiceCard';
+export { default as Welcome } from './Welcome';
+export { default as Actuality } from './Actuality';
+export { default as MyServices } from './MyServices';
+export { default as Articles } from './Articles';
