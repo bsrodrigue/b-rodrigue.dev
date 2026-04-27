@@ -19,8 +19,10 @@ export default function Blog({ articles }) {
       </Head>
 
       <section className="hero">
-        <h1 className="profile-name">{t.heroTitle}</h1>
-        <p className="profile-title">{t.heroSubtitle}</p>
+        <div className="container">
+          <h1 className="profile-name">{t.heroTitle}</h1>
+          <p className="profile-title">{t.heroSubtitle}</p>
+        </div>
       </section>
 
       <section>

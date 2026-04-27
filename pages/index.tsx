@@ -59,6 +59,27 @@ export default function Home() {
         </section>
 
         <section>
+          <div className="about-grid">
+            <div className="about-card">
+              <h3>{t.aboutTitle}</h3>
+              <ul className="styled-list">
+                {t.aboutList.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="about-card">
+              <h3>{t.focusTitle}</h3>
+              <ul className="styled-list">
+                {t.focusList.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
           <h2 className="section-title">{t.timelineTitle}</h2>
           <div className="experience-timeline">
             {t.experience.map((item) => (

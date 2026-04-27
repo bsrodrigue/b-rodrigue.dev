@@ -1,7 +1,7 @@
 ---
 title: "Intellectual Apathy"
-metaTitle: ""
-metaDesc: ""
+metaTitle: "Intellectual Apathy"
+metaDesc: "Intellectual apathy is the lack of interest in intellectual activities."
 date: "2026-04-27"
 category: essay
 tags:
