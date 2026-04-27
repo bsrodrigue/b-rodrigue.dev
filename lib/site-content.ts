@@ -183,6 +183,8 @@ export const siteContent = {
       heroSubtitle: "Articles and essays on everything that matters to me",
       recentTitle: "Recent Articles",
       readMore: "Read more ->",
+      searchPlaceholder: "Search articles...",
+      noResults: "No articles found matching that search.",
     },
     article: {
       backToBlog: "Back to blog",
@@ -354,6 +356,8 @@ export const siteContent = {
         "Articles et réflexions sur le développement, les systèmes et la tech.",
       recentTitle: "Articles récents",
       readMore: "Lire la suite ->",
+      searchPlaceholder: "Rechercher des articles...",
+      noResults: "Aucun article correspondant à la recherche.",
     },
     article: {
       backToBlog: "Retour au blog",

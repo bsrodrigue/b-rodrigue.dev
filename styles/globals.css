@@ -961,6 +961,51 @@ section {
   color: var(--text-secondary);
 }
 
+.search-wrapper {
+  margin-bottom: 3rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: var(--surface-color);
+  border: var(--border-width) solid var(--border-color);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.no-results {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.article-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border-color);
+  background: transparent;
+}
+
 /* Markdown Content */
 .markdown-content {
   max-width: var(--container-width);
