@@ -1,27 +1,40 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import fs from "fs";
 import matter from "gray-matter";
+import { getSiteLocale, siteContent } from "../lib/site-content";
 
 export default function Blog({ articles }) {
+  const router = useRouter();
+  const locale = getSiteLocale(router.locale);
+  const t = siteContent[locale].blog;
+
   return (
     <>
       <Head>
-        <title>Blog | BRodrigue</title>
+        <title>{t.title}</title>
+        <meta name="description" content={t.description} />
       </Head>
-      <section style={{ paddingTop: '4rem' }}>
+
+      <section className="hero">
+        <h1 className="profile-name">{t.heroTitle}</h1>
+        <p className="profile-title">{t.heroSubtitle}</p>
+      </section>
+
+      <section>
         <div className="container">
-          <h1 style={{ textAlign: 'center', marginBottom: '3rem' }}>Blog</h1>
+          <h2 className="section-title">{t.recentTitle}</h2>
           <div className="blog-list">
             {articles.map((article) => (
               <div key={article.slug} className="blog-item">
-                <Link href={`/articles/${article.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <h2 style={{ cursor: 'pointer', color: '#0070f3' }}>{article.frontmatter.title}</h2>
+                <Link href={`/articles/${article.slug}`} style={{ textDecoration: 'none' }}>
+                  <h2>{article.frontmatter.title}</h2>
                 </Link>
                 <div className="blog-date">{article.frontmatter.date}</div>
                 <p>{article.frontmatter.description}</p>
-                <Link href={`/articles/${article.slug}`}>Read more &rarr;</Link>
+                <Link href={`/articles/${article.slug}`}>{t.readMore}</Link>
               </div>
             ))}
           </div>

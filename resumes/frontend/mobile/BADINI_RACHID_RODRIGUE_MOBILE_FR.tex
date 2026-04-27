@@ -1,0 +1,113 @@
+% Document class and geometry
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{left=1cm,right=1cm,top=1.2cm,bottom=1.2cm}
+
+% Packages
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{FiraSans}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+% Section titles
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{0.6em}{0.4em}
+
+\raggedbottom
+
+% ATS-friendly job header
+\newcommand{\jobheader}[4]{%
+    \textbf{#1} \hfill #2 \\
+    \textit{#3} \hfill \textit{#4}
+    \vspace{0.05cm}
+}
+
+\begin{document}
+
+% Header
+\begin{center}
+    {\LARGE\bfseries Rachid Rodrigue BADINI} \\[0.15cm]
+    \textbf{Senior Mobile Engineer | React Native • Flutter • TypeScript • Dart} \\
+    Email: bsrodrigue@gmail.com | LinkedIn: \href{https://linkedin.com/in/b-rodrigue}{linkedin.com/in/b-rodrigue} | GitHub: \href{https://github.com/bsrodrigue}{github.com/bsrodrigue} \\
+    \textbf{Lieu :} Burkina Faso, Ouagadougou
+\end{center}
+
+\vspace{0.1cm}
+
+% Résumé professionnel
+\section*{Résumé Professionnel}
+Ingénieur Mobile Senior avec plus de 7 ans d'expérience spécialisé dans le développement multiplateforme avec \textbf{React Native} et \textbf{Flutter}. Expert dans l'architecture d'applications de production performantes pour iOS et Android, avec un accent particulier sur la \textbf{Clean Architecture}, la gestion d'état réactive et les performances natives. Expérience avérée dans la livraison de solutions complexes pour la FinTech, le E-commerce et les paris sportifs. Passionné par l'excellence technique, les systèmes offline-first et l'optimisation du bridge entre les environnements natifs et JavaScript/Dart.
+
+% Compétences techniques
+\section*{Compétences Techniques}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Frameworks Mobiles :} React Native (v0.70+), Flutter (v3.x), Expo (EAS), React Navigation, GoRouter
+    \item \textbf{Langages :} JavaScript (ES6+), TypeScript, Dart, Java/Kotlin (bases Android), Swift (bases iOS)
+    \item \textbf{Gestion d'État :} Redux (Toolkit/Saga), Context API, Hookstate, MobX, BLoC, Provider, Riverpod
+    \item \textbf{Performance \& UI :} Native Modules, Animations (Reanimated, Lottie), Skia, Responsive Design, Theming
+    \item \textbf{Intégration Backend :} RESTful APIs, GraphQL (Apollo), Firebase (FCM, Auth, Firestore), WebSockets, Stripe API
+    \item \textbf{CI/CD \& Outils :} Fastlane, GitHub Actions, Bitbucket Pipelines, App Center, Xcode, Android Studio, Maestro, Jest
+\end{itemize}
+
+% Expérience Professionnelle
+\section*{Expérience Professionnelle}
+
+\jobheader{Développeur Mobile Indépendant (React Native \& Flutter)}{Freelance}{2019 -- Présent}{À distance}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{PMUB (React Native) :} Développement d'une plateforme de paris hippiques gérant des flux de données en temps réel via WebSockets et intégrations de paiement sécurisées.
+    \item \textbf{Songre - EliteApp (React Native) :} Architecture d'une super-app multi-services (Emploi, E-commerce, Médical, Livraison) gérant plusieurs types d'utilisateurs (clients, vendeurs, livreurs, admins).
+    \item \textbf{Allo Youri (Flutter \& Web) :} Implémentation d'une plateforme de livraison avec suivi GPS en temps réel et création de la landing page (allo-youri.com).
+    \item \textbf{Les Genets (Flutter) :} Développement d'une application médicale offrant téléconsultations, services SOS et gestion de dossiers médicaux.
+    \item \textbf{AppShare (React Native \& Go) :} Conception d'un outil de distribution d'APK avec un backend robuste en Go, optimisant le versioning et le partage de binaires.
+    \item \textbf{Dom Immo (NextJS) :} Développement de l'interface utilisateur haute performance pour une plateforme immobilière propulsée par l'IA.
+    \item \textbf{Educational Chat (React \& Flask) :} Création d'une application de chat collaborative en temps réel pour le milieu éducatif avec un backend Python.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Lead Fullstack Engineer (React \& React Native)}{Gandyam Ligdi (FinTech)}{Juil. 2023 -- Oct. 2024}{Remote}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{FinTech Mobile-First :} Direction de la livraison de fonctionnalités de paiement sécurisées sur React Native, avec un focus sur les transactions ACID-compliant et la gestion d'erreurs robuste.
+    \item \textbf{Optimisation :} Amélioration de la réactivité de l'application mobile de 40\% grâce à une mise en cache stratégique Redis et l'optimisation du thread UI.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Fullstack Software Engineer (React Native • Node • Python)}{N7 Studio}{Avr 2021 -- Avr 2023}{Remote (Canada)}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Streaming Mobile :} Développement de fonctionnalités pour une plateforme de streaming à haute concurrence sous React Native, supportant plus de 5 000 sessions mobiles simultanées.
+    \item \textbf{Tests Automatisés :} Intégration de Detox (E2E) et Jest dans les pipelines CI/CD, augmentant la fiabilité du code mobile et réduisant les régressions en production de 60\%.
+\end{itemize}
+
+% Formation
+\section*{Formation}
+\textbf{Master en Génie Logiciel} \hfill Université Aube Nouvelle \\
+\textit{Spécialisation en Systèmes Distribués et Architecture} \hfill 2022
+
+\textbf{Licence en Réseaux Informatiques} \hfill Université Aube Nouvelle \\
+\textit{Focus sur l'Administration Systèmes et la Sécurité Réseaux} \hfill 2021
+
+% Projets d'ingénierie
+\section*{Projets d'Ingénierie Clés}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{DreamServer (Go) :} Conception d'un reverse proxy HTTP et d'un serveur statique à partir de zéro. Développement d'un parseur HTTP personnalisé pour gérer les connexions TCP brutes — essentiel pour le débogage réseau mobile. \\
+    GitHub : \href{https://github.com/bsrodrigue/dreamproxy}{github.com/bsrodrigue/dreamproxy}
+\end{itemize}
+
+% Langues
+\section*{Langues}
+\textbf{Anglais :} C1 (Courant professionnel) | \textbf{Français :} Maternel
+
+\end{document}

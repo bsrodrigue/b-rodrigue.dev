@@ -1,0 +1,145 @@
+% Classe de document et géométrie
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{left=1cm,right=1cm,top=1.2cm,bottom=1.2cm}
+
+% Paquets
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{FiraSans}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Configuration des liens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+% Titres de section
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{0.6em}{0.4em}
+
+\raggedbottom
+
+% Commande pour l'en-tête d'expérience
+\newcommand{\jobheader}[4]{%
+    \textbf{#1} \hfill #2 \\
+    \textit{#3} \hfill \textit{#4}
+    \vspace{0.05cm}
+}
+
+\begin{document}
+
+% En-tête
+\begin{center}
+    {\LARGE\bfseries Rachid Rodrigue BADINI} \\[0.15cm]
+    \textbf{Ingénieur Fullstack Senior | Expert JavaScript (ES6+) • React • TypeScript • Node.js} \\
+    Courriel : bsrodrigue@gmail.com | LinkedIn : \href{https://linkedin.com/in/b-rodrigue}{linkedin.com/in/b-rodrigue} | GitHub : \href{https://github.com/bsrodrigue}{github.com/bsrodrigue} \\
+    \textbf{Lieu :} Burkina Faso, Ouagadougou
+\end{center}
+
+\vspace{0.1cm}
+
+% Résumé professionnel
+\section*{Résumé Professionnel}
+Ingénieur Fullstack Senior avec plus de 7 ans d'expérience dans la construction de systèmes scalables et de qualité production. Expert dans la création d'interfaces utilisateur haute performance avec \textbf{React (Hooks)}, \textbf{Next.js} et \textbf{Material UI}, couplées à des backends robustes utilisant \textbf{Node.js}, \textbf{NestJS} et \textbf{GraphQL}. Expertise en optimisation \textbf{MySQL/PostgreSQL} et orchestration de conteneurs sur \textbf{AWS (ECS, Lambda, Fargate)}. Passionné par les flux de travail IA et la Clean Architecture (DDD).
+
+% Compétences techniques
+\section*{Compétences Techniques}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Frontend :} React (v17+), Next.js, TypeScript, Apollo GraphQL, Hooks, Material UI, Formik, Tailwind CSS
+    \item \textbf{Backend :} Node.js, NestJS, Python (Django/DRF, FastAPI), Go, GraphQL (Apollo), Prisma ORM, APIs REST
+    \item \textbf{Infrastructure \& Cloud :} \textbf{AWS} (ECS, Fargate, RDS, S3, Lambda, CloudFront, Route 53), Docker, Coolify
+    \item \textbf{Bases de données \& Cache :} MySQL (Maîtrise), PostgreSQL (Optimisation), Redis, RabbitMQ
+    \item \textbf{Tests \& Outils :} Jest (Tests Unitaires), Cypress (E2E), GitHub Actions, Bitbucket Pipelines, GitFlow, Jira, Scrum
+\end{itemize}
+
+% Expérience professionnelle
+\section*{Expérience Professionnelle}
+
+\jobheader{Ingénieur Fullstack Principal}{DISCOM}{Mars 2026 -- Présent}{Ouagadougou}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Architecture Orientée Données :} Conception d'un moteur de traitement de données à haut débit utilisant Django et DRF, assurant une livraison de données sans latence pour des centaines de milliers de lignes.
+    \item \textbf{UX Haute Performance :} Élimination des goulots d'étranglement des requêtes par l'implémentation de pipelines de tâches asynchrones avec Redis et Celery, garantissant une expérience utilisateur fluide.
+    \item \textbf{Optimisation du Stockage :} Optimisation des schémas PostgreSQL pour une récupération à haute concurrence et une consommation en temps réel par les frameworks frontend modernes.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Ingénieur Logiciel Fullstack (C++)}{Astek Madagascar}{Juillet 2025 -- Déc. 2025}{Madagascar}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Performance Système :} Refactorisation de modules C++/Qt multithreadés, réduisant l'empreinte mémoire de 30 \% et la latence système de 40 \%.
+    \item \textbf{UI Embarquée :} Développement d'interfaces embarquées haute performance avec QML, garantissant une expérience utilisateur fluide dans des environnements contraints.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Ingénieur Fullstack Principal (Next.js \& Python)}{Doonya Labs}{Nov. 2024 -- Juillet 2025}{Hybride}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Leadership Architectural :} Direction de la conception d'une plateforme haute performance utilisant \textbf{Next.js} et Django, gérant plus de 50 000 requêtes API quotidiennes.
+    \item \textbf{DevOps \& Cloud :} Optimisation des pipelines de déploiement conteneurisés via \textbf{Docker} et \textbf{AWS ECS}, réduisant les cycles de déploiement de 60 \% (déploiements en < 2 min).
+    \item \textbf{Développement API \& UI :} Création d'interfaces réactives avec \textbf{React/Next.js} et gestion des transitions d'état complexes via les Hooks et les bibliothèques de formulaires modernes.
+    \item \textbf{Mentoring :} Point de contact technique clé, mentorat de 4 ingénieurs et direction de l'excellence technique en environnement Scrum.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Ingénieur Fullstack Principal (React \& React Native \& Python)}{Gandyam Ligdi (FinTech)}{Juil. 2023 -- Oct. 2024}{À distance}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Ingénierie Financière :} Développement d'APIs et d'interfaces financières sécurisées et conformes ACID pour une startup de paiement, garantissant la fiabilité des transactions via \textbf{MySQL}.
+    \item \textbf{Livraison Fullstack :} Développement de fonctionnalités sur le web (\textbf{React}) et mobile (\textbf{React Native / TypeScript}), avec un focus sur l'optimisation des performances et l'itération rapide.
+    \item \textbf{Optimisation :} Amélioration du débit système de 40 \% via une mise en cache \textbf{Redis} stratégique et la refactorisation de requêtes \textbf{SQL}.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Consultant Fullstack (Freelance)}{Projets Variés}{2019 -- Présent}{À distance}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{FinTech \& Betting (React Native) :} Développement de l'application \textbf{PMUB} (paris hippiques) avec dashboard temps réel et intégration de paiements sécurisés.
+    \item \textbf{Super-App (React Native) :} Architecture de \textbf{Songre - EliteApp}, plateforme multi-services (E-commerce, médical, livraison) gérant 5 types d'utilisateurs distincts.
+    \item \textbf{E-Santé (Flutter) :} Conception de l'application \textbf{Les Genets} (téléconsultation, SOS, dossiers médicaux) et \textbf{Allo Youri} (logistique avec suivi GPS temps réel).
+    \item \textbf{Backend \& DevOps (Go/NextJS) :} Développement de \textbf{Appshare} (Go) pour la distribution d'APK et de l'interface propulsée par l'IA pour \textbf{Dom Immo} (NextJS).
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Ingénieur Logiciel Fullstack (React Native • Node • Python)}{N7 Studio}{Avril 2021 -- Avril 2023}{À distance (Canada)}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{GraphQL \& Node.js :} Construction et maintenance de services \textbf{Node.js + GraphQL} pour une plateforme de streaming supportant 5 000 utilisateurs simultanés.
+    \item \textbf{Frontend Moderne :} Développement d'interfaces web réactives avec \textbf{React} et d'applications mobiles utilisant \textbf{React Native} et TypeScript.
+    \item \textbf{Fiabilité :} Intégration de suites de tests (\textbf{Jest}) atteignant 85 \% de couverture de code.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Administrateur Systèmes Linux Junior}{ANPTIC}{Mars 2021 -- Juin 2021}{Ouagadougou}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Infrastructure :} Déploiement de clusters redondants à haute disponibilité et optimisation de noyaux Linux pour supporter des utilisateurs critiques.
+\end{itemize}
+
+% Formation
+\section*{Formation}
+\textbf{Master en Génie Logiciel} \hfill Université Aube Nouvelle \\
+\textit{Spécialisation en Systèmes Distribués et Architecture} \hfill 2022
+
+\textbf{Licence en Réseaux Informatiques} \hfill Université Aube Nouvelle \\
+\textit{Focus sur l'administration système et la sécurité réseau} \hfill 2021
+
+% Projets Clés d'Ingénierie
+\section*{Projets Clés d'Ingénierie}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{DreamServer (Go) :} Conception d'un proxy inverse HTTP et d'un serveur statique à partir de zéro. Développement d'un parseur HTTP personnalisé pour gérer les connexions TCP brutes, le transfert d'en-têtes et les journaux structurés. \\
+    GitHub : \href{https://github.com/bsrodrigue/dreamproxy}{github.com/bsrodrigue/dreamproxy}
+\end{itemize}
+
+% Langues
+\section*{Langues}
+\textbf{Français :} Langue maternelle | \textbf{Anglais :} C1 (Courant professionnel)
+
+\end{document}

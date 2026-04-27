@@ -1,52 +1,123 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import settings from "../settings";
+import { getSiteLocale, siteContent } from "../lib/site-content";
+import { PortfolioProject, ProjectKind, ProjectType } from "../interfaces";
 
 const { portfolioProjects } = settings;
 
-const categories = [
-    { id: 'react', title: 'React & Next.js Projects', description: 'Modern web applications built with React and Next.js.' },
-    { id: 'react-native', title: 'React Native Mobile Projects', description: 'Cross-platform mobile applications.' },
-    { id: 'vanilla', title: 'Vanilla Projects', description: 'Foundational projects built with HTML, CSS, and JavaScript.' },
-    { id: 'c', title: 'C/C++ Projects', description: 'Low-level programming and system tools.' },
-];
-
 const PortfolioPage: React.FC = () => {
+    const router = useRouter();
+    const locale = getSiteLocale(router.locale);
+    const t = siteContent[locale].portfolio;
+
+    // Grouping logic
+    const workProjects = portfolioProjects.filter(p => p.kind === "client" || p.kind === "employer");
+    const personalProjects = portfolioProjects.filter(p => p.kind === "personal");
+
+    const renderProjectLink = (project: PortfolioProject) => {
+        if (project.link === "#") {
+            return <span className="project-link disabled">{t.unavailable}</span>;
+        }
+
+        if (project.linkType === "internal") {
+            return (
+                <Link href={project.link} className="project-link">
+                    {t.ctaInternal}
+                </Link>
+            );
+        }
+
+        return (
+            <a href={project.link} target="_blank" rel="noreferrer" className="project-link">
+                {t.ctaExternal}
+            </a>
+        );
+    };
+
+    const getTypeLabel = (type: ProjectType) => {
+        switch (type) {
+            case "application": return t.typeApplication;
+            case "website": return t.typeWebsite;
+            case "game": return t.typeGame;
+            case "cli": return t.typeCli;
+            default: return type;
+        }
+    };
+
+    const getKindLabel = (kind: ProjectKind) => {
+        switch (kind) {
+            case "client": return t.kindClient;
+            case "employer": return t.kindEmployer;
+            default: return "";
+        }
+    };
+
+    const renderProjectsByType = (projects: PortfolioProject[]) => {
+        const byType = projects.reduce((acc, p) => {
+            if (!acc[p.type]) acc[p.type] = [];
+            acc[p.type].push(p);
+            return acc;
+        }, {} as Record<ProjectType, PortfolioProject[]>);
+
+        return (Object.keys(byType) as ProjectType[]).map(type => (
+            <div key={type} className="type-group">
+                <h3 className="type-title">{getTypeLabel(type)}</h3>
+                <div className="projects-grid">
+                    {byType[type].map((project, index) => (
+                        <article 
+                            key={`${project.title}-${index}`} 
+                            className={`project-card ${project.type === 'cli' ? 'cli-card' : ''}`}
+                        >
+                            {project.cover && (
+                                <div className="project-cover-wrapper">
+                                    <img src={project.cover} alt={project.title} loading="lazy" />
+                                </div>
+                            )}
+                            <div className="project-content">
+                                <div className="project-header">
+                                    <h4>{project.title}</h4>
+                                    {(project.kind === 'client' || project.kind === 'employer') && (
+                                        <span className="kind-badge">{getKindLabel(project.kind)}</span>
+                                    )}
+                                </div>
+                                <p>{project.description[locale]}</p>
+                                {renderProjectLink(project)}
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        ));
+    };
+
     return (
         <>
             <Head>
-                <title>Portfolio | BRodrigue</title>
+                <title>{t.title}</title>
+                <meta name="description" content={t.description} />
             </Head>
-            <section style={{ paddingTop: '4rem' }}>
+
+            <section className="hero">
+                <h1 className="profile-name">{t.heroTitle}</h1>
+                <p className="profile-title">{t.heroSubtitle}</p>
+            </section>
+
+            <section>
                 <div className="container">
-                    <h1 style={{ textAlign: 'center' }}>My Portfolio</h1>
-                    <p style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto 4rem auto', color: '#666' }}>
-                        A collection of my work across different technologies and platforms.
-                    </p>
+                    <div className="portfolio-section">
+                        <h2 className="section-title">{t.clientTitle}</h2>
+                        <p className="section-intro">{t.clientDescription}</p>
+                        {renderProjectsByType(workProjects)}
+                    </div>
 
-                    {categories.map((category) => {
-                        const projects = portfolioProjects.filter(p => p.stack === category.id);
-                        if (projects.length === 0) return null;
-
-                        return (
-                            <div key={category.id} style={{ marginBottom: '4rem' }}>
-                                <h2>{category.title}</h2>
-                                <p style={{ marginBottom: '2rem', color: '#666' }}>{category.description}</p>
-                                <div className="projects-grid">
-                                    {projects.map((project, index) => (
-                                        <div key={index} className="project-card">
-                                            <img src={project.cover} alt={project.title} />
-                                            <h3>{project.title}</h3>
-                                            <p>{project.description}</p>
-                                            <a href={project.link} target="_blank" rel="noreferrer">
-                                                View Project &rarr;
-                                            </a>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
+                    <div className="portfolio-section">
+                        <h2 className="section-title">{t.personalTitle}</h2>
+                        <p className="section-intro">{t.personalDescription}</p>
+                        {renderProjectsByType(personalProjects)}
+                    </div>
                 </div>
             </section>
         </>

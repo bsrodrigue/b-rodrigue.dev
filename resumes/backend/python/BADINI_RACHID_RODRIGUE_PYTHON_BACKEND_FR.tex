@@ -1,0 +1,141 @@
+% Classe de document et géométrie
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{left=1cm,right=1cm,top=1.2cm,bottom=1.2cm}
+
+% Paquets
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{FiraSans}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Configuration des liens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+% Titres de section
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{0.6em}{0.4em}
+
+\raggedbottom
+
+% Commande pour l'en-tête d'expérience
+\newcommand{\jobheader}[4]{%
+    \textbf{#1} \hfill #2 \\
+    \textit{#3} \hfill \textit{#4}
+    \vspace{0.05cm}
+}
+
+\begin{document}
+
+% En-tête
+\begin{center}
+    {\LARGE\bfseries Rachid Rodrigue BADINI} \\[0.15cm]
+    \textbf{Ingénieur Backend Senior | Systèmes Distribués | Python • Go • C++} \\
+    Courriel : bsrodrigue@gmail.com | LinkedIn : \href{https://linkedin.com/in/b-rodrigue}{linkedin.com/in/b-rodrigue} | GitHub : \href{https://github.com/bsrodrigue}{github.com/bsrodrigue} \\
+    \textbf{Lieu :} Burkina Faso, Ouagadougou
+\end{center}
+
+\vspace{0.1cm}
+
+% Résumé professionnel
+\section*{Résumé Professionnel}
+Ingénieur Backend Senior avec plus de 7 ans d'expérience dans la conception de systèmes distribués à haute disponibilité et de plateformes FinTech. Expert dans l'optimisation des performances (réduction de la latence de 40 \%) et la mise à l'échelle d'API pour plus de 50 000 utilisateurs quotidiens. Solide expertise en programmation système, architecture de bases de données et cycle de vie complet du logiciel (SDLC). Habitué à collaborer avec des équipes nord-américaines dans des environnements Agiles.
+
+% Compétences techniques
+\section*{Compétences Techniques}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Langages :} Python (Expert), Go (Avancé), C++ (Systèmes/Qt), SQL (PostgreSQL/MySQL), TypeScript
+    \item \textbf{Backend et Systèmes :} Systèmes distribués, Microservices, Concurrency, Optimisation de performance
+    \item \textbf{Infrastructure et DevOps :} AWS (EC2, S3, Lambda), Docker, Kubernetes, Terraform, CI/CD (GitHub Actions)
+    \item \textbf{Bases de données et Cache :} PostgreSQL (Optimisation de requêtes, Indexation), Redis, Files d'attente (Celery/RabbitMQ)
+    \item \textbf{Réseautage :} TCP/IP, WebSockets, HTTP/HTTPS, DNS, Équilibrage de charge
+\end{itemize}
+
+% Expérience professionnelle
+\section*{Expérience Professionnelle}
+
+\jobheader{Ingénieur Backend Principal}{DISCOM}{Mars 2026 -- Présent}{Ouagadougou}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Systèmes à haut débit :} Architecture d'un serveur haute performance utilisant Django et DRF pour le traitement de données à grande échelle, garantissant une livraison sans latence de centaines de milliers de lignes.
+    \item \textbf{Architecture Asynchrone :} Mise en œuvre de Redis et Celery pour le traitement des tâches en arrière-plan, découplant avec succès les opérations de données longues du cycle requête-réponse.
+    \item \textbf{Ingénierie de données :} Optimisation des stratégies de stockage et de récupération PostgreSQL pour des jeux de données massifs, avec un focus sur la sérialisation efficace et la performance des requêtes.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Ingénieur Systèmes / Backend (C++)}{Astek Madagascar}{Juillet 2025 -- Déc. 2025}{Madagascar}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Optimisation des performances :} Refactorisation de modules C++/Qt multithreadés, réduisant l'empreinte mémoire de 30 \% et la latence système de 40 \%.
+    \item \textbf{Architecture système :} Développement de services C++ de qualité production avec des frontières modulaires strictes pour garantir la maintenabilité à long terme.
+    \item \textbf{Excellence technique :} Mise en place de normes rigoureuses de revue de code et documentation des modes de défaillance, réduisant les bogues en production de 15 \%.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Ingénieur Backend Principal}{Doonya Labs}{Nov. 2024 -- Juil. 2025}{Hybride}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Scalabilité :} Conception d'une plateforme Django/DRF gérant plus de 50 000 requêtes API quotidiennes avec une disponibilité de 99,9 \%.
+    \item \textbf{Ingénierie de données :} Création de pipelines ETL haute performance avec pandas/NumPy pour le traitement de millions d'enregistrements en temps réel.
+    \item \textbf{Infrastructure :} Orchestration de conteneurs via Kubernetes sur AWS, améliorant la fréquence de déploiement grâce à l'automatisation CI/CD.
+    \item \textbf{Leadership :} Mentorat d'une équipe pluridisciplinaire de 4 ingénieurs et direction des cérémonies SCRUM.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Ingénieur Backend Principal (FinTech)}{GandyamLigdi}{Juil. 2023 -- Oct. 2024}{À distance}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Systèmes financiers :} Développement d'API financières sécurisées et conformes ACID traitant plus de 10 000 transactions mensuelles.
+    \item \textbf{Architecture :} Conception d'un écosystème de microservices utilisant le "Repository Pattern" et l'injection de dépendances.
+    \item \textbf{Optimisation :} Augmentation du débit de 40 \% via une stratégie de mise en cache Redis et l'optimisation des requêtes PostgreSQL.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Ingénieur Logiciel Backend}{N7 Studio}{Avril 2021 -- Avril 2023}{À distance (Canada)}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Haute concurrence :} Développement de services Node.js + GraphQL pour une plateforme de streaming supportant 5 000 utilisateurs simultanés.
+    \item \textbf{Fiabilité :} Intégration de suites de tests complètes (PyTest, Cypress) dans les pipelines automatisés, atteignant 85 \% de couverture de code.
+    \item \textbf{Efficacité :} Réduction des temps de réponse API de 45 \% par l'implémentation du pooling de connexions et l'optimisation SQL.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Administrateur Systèmes Linux (Contractuel)}{ANPTIC}{Mars 2021 -- Juin 2021}{Ouagadougou}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Optimisation Noyau :} Personnalisation et recompilation de noyaux Linux pour supporter des pilotes spécifiques et renforcer la sécurité.
+    \item \textbf{Haute Disponibilité :} Déploiement d'un cluster Jitsi Meet redondant pour plus de 200 utilisateurs, garantissant une disponibilité totale.
+\end{itemize}
+
+% Formation
+\section*{Formation}
+\textbf{Maîtrise (M.Sc.) en Génie Logiciel} \hfill Université Aube Nouvelle \\
+\textit{Spécialisation en Systèmes Distribués et Architecture} \hfill 2021 -- 2022
+
+\vspace{0.1cm}
+
+\textbf{Licence (B.Sc.) en Réseaux Informatiques} \hfill Université Aube Nouvelle \\
+\textit{Focus sur TCP/IP, Systèmes Linux et Administration Réseau} \hfill 2017 -- 2021
+
+% Projets d'Ingénierie Clés
+\section*{Projets d'Ingénierie Clés}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{DreamServer (Go) :} Conception d'un reverse proxy HTTP et d'un serveur de fichiers statiques léger à partir de zéro. Développement d'un parseur HTTP personnalisé pour gérer les connexions TCP brutes, le transfert d'en-têtes et les journaux structurés. \\
+    GitHub : \href{https://github.com/bsrodrigue/dreamproxy}{github.com/bsrodrigue/dreamproxy}
+\end{itemize}
+
+\vspace{0.1cm}
+
+% Langues
+\section*{Langues}
+\textbf{Français :} Maternel | \textbf{Anglais :} C1 (Courant professionnel)
+
+\end{document}

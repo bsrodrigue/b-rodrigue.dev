@@ -26,135 +26,146 @@ const services: Service[] = [
 ];
 
 const portfolioProjects: PortfolioProject[] = [
-  // Vanilla (HTML, CSS, Javascript)
   {
-    cover: "/images/projects/afrosound.webp",
-    title: "AfroSound",
-    description:
-      "I built this single page in vanilla html, some bootstrap and javascript to get a better grasp of the base web technologies. I believe this was the foundation of my current frontend skills.",
-    link: "https://badini-afrosound.netlify.app/",
-    stack: "vanilla",
+    title: "Songre",
+    description: {
+      en: "Mobile application delivered for a multi-service client product.",
+      fr: "Application mobile livrée pour un produit client multi-service.",
+    },
+    link: "https://play.google.com/store/apps/details?id=bf.songre&hl=fr",
+    cover: "/images/projects/songre.webp",
+    kind: "client",
+    type: "application",
   },
   {
-    cover: "/images/projects/hiredev.webp",
-    title: "Hire A Dev",
-    description:
-      "After building Afrosound, I wanted some new challenge by building a better looking static website. It led to this fun project where I built a nice looking page with bootstrap and jquery.",
-    link: "https://hire1dev.netlify.app/",
-    stack: "vanilla",
+    title: "Les Genets",
+    description: {
+      en: "Healthcare product spanning patient-facing mobile usage and a supporting web presence.",
+      fr: "Produit e-santé couvrant un usage mobile côté patient et une présence web associée.",
+    },
+    link: "https://les-genets.net/",
+    cover: "/images/projects/genets.jpg",
+    kind: "client",
+    type: "application",
   },
   {
-    cover: "/images/projects/gameyaar.webp",
-    title: "Gameyaar",
-    description:
-      "I am a huge fan of video games, and this is probably my favourite static web page. For this one, I wanted an even bigger challenge, and decided not to rely on bootstrap. I am proud of the result and even used a library called 'Tilt.js' to add an awesome tilting effect on hover.",
-    link: "https://gameyaar.netlify.app/",
-    stack: "vanilla",
-  },
-
-
-  // React
-  {
-    cover: "/images/projects/otapix.png",
-    title: "Otapix",
-    description:
-      "This is an online game to play a variant of 4Images1Word, a famous mobile game where you have to guess the correct word by looking the four hint images. This one took me a lot of work and taught me the importance of clean code and planning. I use firebase as the backend and Next.js on the UI side",
-    link: "https://dev-otapix.netlify.app/",
-    stack: "react",
+    title: "Cotton App",
+    description: {
+      en: "Platform website for a client product. Final public link will be added later.",
+      fr: "Site plateforme pour un produit client. Le lien public final sera ajouté plus tard.",
+    },
+    link: "#",
+    cover: "/images/projects/cotonapp.jpg",
+    kind: "client",
+    type: "website",
   },
   {
-    cover: "/images/projects/pomodoomer.png",
-    title: "Pomodoomer",
-    description:
-      "I sometimes use the Pomodoro technique while coding, and I wondered if I could build my own. It made me realize that working with timers can be tricky, but it turned out fine.",
-    link: "https://pomodoomer.netlify.app/",
-    stack: "react",
+    title: "Blindtrust",
+    description: {
+      en: "Platform website built for a client-facing product at Doonya Labs.",
+      fr: "Site plateforme construit pour un produit orienté client chez Doonya Labs.",
+    },
+    link: "https://app.blindtrust.doonyalabs.com",
+    cover: "/images/projects/blindtrust.jpg",
+    kind: "employer",
+    type: "website",
   },
   {
-    cover: "/images/projects/brodrigue.png",
-    title: "BRodrigue",
-    description:
-      "Some developers prefer using a prebuilt website or template for their portfolio. I prefer quality handmade goods with ❤️",
-    link: "https://b-rodrigue.com/",
-    stack: "react",
+    title: "Dom Immo",
+    description: {
+      en: "Platform website for a real-estate product with an AI-oriented user experience.",
+      fr: "Site plateforme pour un produit immobilier avec une expérience orientée IA.",
+    },
+    link: "https://dom.immo/",
+    cover: "/images/projects/domimmo.jpg",
+    kind: "client",
+    type: "website",
   },
   {
-    cover: "/images/projects/gamosyaar.png",
-    title: "Gamos Yaar",
-    description:
-      "A fun little project: A car searching web application leveraging a complete public car API. It is built using Next.js 13 and Tailwind",
-    link: "https://gamosyaar.netlify.app/",
-    stack: "react",
+    title: "Allo-Youri",
+    description: {
+      en: "Application and website for a delivery-focused client product with real-time logistics flows.",
+      fr: "Application et site web pour un produit client orienté livraison avec des flux logistiques temps réel.",
+    },
+    link: "https://allo-youri.com",
+    cover: "/images/projects/allo-youri.jpg",
+    kind: "client",
+    type: "application",
   },
   {
-    cover: "/images/projects/gandyam.png",
-    title: "Gandyam Pay",
-    description:
-      "This is a website I've built for an employer at Gandyam Ligdi, a fintech company based in Burkina Faso. They wanted a nice looking website for their latest money transfer mobile application. I built it with React and Material UI along with Framer Motion for animations.",
-    link: "https://gandyampay.netlify.app/",
-    stack: "react",
-  },
-  {
+    title: "Dyswis",
+    description: {
+      en: "Application and website product involving subscriptions, payments, and user-facing product flows.",
+      fr: "Produit application et site web incluant abonnements, paiements et parcours utilisateurs.",
+    },
+    link: "#",
     cover: "/images/projects/dyswis.png",
-    title: "Dyswis Web",
-    description:
-      "DYSWIS (Do You See What I See) was my first projects at N7-Studio, a canadian software company. The crux of my work was to implement the UI of the registration pages, integrate a Stripe payment process and a customer dashboard to manage their subscriptions",
-    link: "https://dyswis.tv/en/dyswis-2/",
-    stack: "react",
-  },
-
-
-  // React Native
-  {
-    cover: "/images/projects/dyswis-mobile.png",
-    title: "Dyswis Mobile",
-    description:
-      "This is the mobile version of the Dyswis platform I worked on during my days at N7-Studio. It was a very interesting project and we leveraged Expo to make the development process faster. I learned about GraphQL and NX monorepos",
-    link: "https://play.google.com/store/apps/details?id=tv.dyswis.dyswis&hl=fr",
-    stack: "react-native",
+    kind: "client",
+    type: "application",
   },
   {
-    cover: "/images/projects/gandyam_wallet.png",
-    title: "Gandyam Pay Wallet",
-    description:
-      "I am currently working on this mobile application at Gandyam Ligdi. As the name suggests, it is a mobile wallet built to facilitate transactions and money transfers in Africa.",
-    link: "",
-    stack: "react-native",
+    title: "Buildshare",
+    description: {
+      en: "Internal Android build distribution platform with a Django backend, async APK processing, and a React Native client.",
+      fr: "Plateforme interne de distribution de builds Android avec backend Django, traitement asynchrone des APK et client React Native.",
+    },
+    link: "/projects/buildshare",
+    cover: "/images/projects/buildshare.png",
+    kind: "personal",
+    type: "application",
+    linkType: "internal",
   },
   {
-    cover: "/images/projects/bibliobooks.png",
-    title: "Bibliobooks Mobile",
-    description:
-      "Not only am I a technology enthusiast, but I am also an avid reader. I wanted to develop my own book writing and reading application. I took inspiration from Wattpad. Here again, I use Expo. My backend is written in Nest.js and file upload and storage is handled by firebase firestore.",
-    link: "https://github.com/bsrodrigue/bibliobooks-mobile",
-    stack: "react-native",
+    title: "Rapid Shooter",
+    description: {
+      en: "A C game inspired by NieR:Automata hacking phases, with its own build system, editor flow, and level data.",
+      fr: "Un jeu en C inspiré des phases de hacking de NieR:Automata, avec son propre système de build, son flux d'édition et ses données de niveau.",
+    },
+    link: "https://github.com/bsrodrigue/rapid_shooter",
+    cover: "/images/projects/placeholder-project.svg",
+    kind: "personal",
+    type: "game",
   },
   {
-    cover: "/images/projects/nativejobs.png",
-    title: "Native Jobs",
-    description:
-      "Job searching is an important part in the life of a Software Engineer, but most of jobseeking websites are bloated. I wanted a simple, beautiful app that would help me look for React & React Native jobs easily.",
-    link: "https://github.com/bsrodrigue/nativejobs",
-    stack: "react-native",
-  },
-
-
-  // C/c++ 
-  {
-    cover: "/images/projects/beanlang.png",
-    title: "Beanlang",
-    description:
-      "I've always wondered how programming languages are made. I didn't shy away and took a deep plunge in the compiler and interpreter design world. It really changed my perspective about programming and motivated me to learn even more. Here is a simple interpreter written in C",
-    link: "https://github.com/bsrodrigue/beanlang",
-    stack: "c",
+    title: "SmolORM",
+    description: {
+      en: "A tiny Python ORM built to keep SQL explicit while providing a fluent API for small apps and learning use cases.",
+      fr: "Un mini ORM Python conçu pour garder SQL explicite tout en offrant une API fluide pour les petits projets et l'apprentissage.",
+    },
+    link: "https://github.com/bsrodrigue/smolorm",
+    kind: "personal",
+    type: "cli",
   },
   {
-    cover: "/images/projects/hacc.gif",
-    title: "Auto Hacker",
-    description:
-      "A small video game that I'm still building in C/C++",
-    link: "https://github.com/bsrodrigue/beanlang",
-    stack: "c",
+    title: "Dreamproxy",
+    description: {
+      en: "A Go reverse proxy and static file server built from scratch to explore HTTP parsing, TCP handling, and server internals.",
+      fr: "Un proxy inverse et serveur de fichiers statiques en Go, construit from scratch pour explorer le parsing HTTP, TCP et les internals serveur.",
+    },
+    link: "/projects/dreamproxy",
+    kind: "personal",
+    type: "cli",
+    linkType: "internal",
+  },
+  {
+    title: "Vidyalog",
+    description: {
+      en: "A Python CLI video game backlog application focused on simple local workflow and personal organization.",
+      fr: "Une application CLI Python de backlog de jeux vidéo, centrée sur un workflow local simple et l'organisation personnelle.",
+    },
+    link: "https://github.com/bsrodrigue/vidyalog",
+    kind: "personal",
+    type: "cli",
+  },
+  {
+    title: "Memscan",
+    description: {
+      en: "A low-level C memory scanning experiment with custom targets, dump analysis, and systems-oriented internals.",
+      fr: "Une expérimentation bas niveau en C autour du scan mémoire, avec cibles personnalisées, analyse de dump et internals système.",
+    },
+    link: "https://github.com/bsrodrigue/memscan",
+    kind: "personal",
+    type: "cli",
   },
 ];
 

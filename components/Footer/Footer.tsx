@@ -1,19 +1,16 @@
 import React from "react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { useRouter } from "next/router";
+import { getSiteLocale, siteContent } from "../../lib/site-content";
 
 const Footer: React.FC = () => {
+    const router = useRouter();
+    const locale = getSiteLocale(router.locale);
+    const t = siteContent[locale];
+
     return (
         <footer>
             <div className="container">
-                <p>© {new Date().getFullYear()} BRodrigue. All rights reserved.</p>
-                <div style={{ marginTop: '1rem', fontSize: '1.5rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-                    <a href="https://linkedin.com" target="_blank" rel="noreferrer">
-                        <FaLinkedin />
-                    </a>
-                    <a href="https://github.com/bsrodrigue" target="_blank" rel="noreferrer">
-                        <FaGithub />
-                    </a>
-                </div>
+                <p>&copy; {new Date().getFullYear()} Rachid Rodrigue BADINI — {t.footerTitle}</p>
             </div>
         </footer>
     );

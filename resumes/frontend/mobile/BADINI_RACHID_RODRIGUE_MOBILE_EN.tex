@@ -1,0 +1,138 @@
+% Document class and geometry
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{left=1cm,right=1cm,top=1.2cm,bottom=1.2cm}
+
+% Packages
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{FiraSans}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+% Section titles
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{0.6em}{0.4em}
+
+\raggedbottom
+
+% ATS-friendly job header
+\newcommand{\jobheader}[4]{%
+    \textbf{#1} \hfill #2 \\
+    \textit{#3} \hfill \textit{#4}
+    \vspace{0.05cm}
+}
+
+\begin{document}
+
+% Header
+\begin{center}
+    {\LARGE\bfseries Rachid Rodrigue BADINI} \\[0.15cm]
+    \textbf{Senior Mobile Engineer | React Native • Flutter • TypeScript • Dart} \\
+    Email: bsrodrigue@gmail.com | LinkedIn: \href{https://linkedin.com/in/b-rodrigue}{linkedin.com/in/b-rodrigue} | GitHub: \href{https://github.com/bsrodrigue}{github.com/bsrodrigue} \\
+    \textbf{Location:} Burkina Faso, Ouagadougou
+\end{center}
+
+\vspace{0.1cm}
+
+% Summary
+\section*{Professional Summary}
+Senior Mobile Engineer with 7+ years of experience specializing in cross-platform development using \textbf{React Native} and \textbf{Flutter}. Expert in architecting high-performance, production-grade applications for iOS and Android, with a focus on \textbf{Clean Architecture}, reactive state management, and native-like performance. Proven track record in delivering complex solutions across FinTech, E-commerce, and real-time betting industries. Passionate about engineering excellence, offline-first systems, and optimizing the bridge between native and JavaScript/Dart environments.
+
+% Skills
+\section*{Technical Skills}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Mobile Frameworks:} React Native (v0.70+), Flutter (v3.x), Expo (EAS), React Navigation, GoRouter
+    \item \textbf{Languages:} JavaScript (ES6+), TypeScript, Dart, Java/Kotlin (Android Basics), Swift (iOS Basics)
+    \item \textbf{State Management:} Redux (Toolkit/Saga), Context API, Hookstate, MobX, BLoC, Provider, Riverpod
+    \item \textbf{Performance \& UI:} Native Modules, Animations (Reanimated, Lottie), Skia, Responsive Design, Theming
+    \item \textbf{Backend Integration:} RESTful APIs, GraphQL (Apollo), Firebase (FCM, Auth, Firestore), WebSockets, Stripe API
+    \item \textbf{CI/CD \& Tools:} Fastlane, GitHub Actions, Bitbucket Pipelines, App Center, Xcode, Android Studio, Detox, Jest
+\end{itemize}
+
+% Experience
+\section*{Professional Experience}
+
+\jobheader{Lead Backend Engineer (Mobile Infrastructure)}{DISCOM}{March 2026 -- Present}{Ouagadougou}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Data-to-Mobile Architecture:} Architecting a high-performance backend using Django and DRF to serve massive data streams to mobile clients with zero latency, processing hundreds of thousands of rows.
+    \item \textbf{High-Performance Sync:} Optimizing mobile-to-server interactions by implementing asynchronous task pipelines with Redis and Celery, ensuring smooth UX during heavy data operations on the client side.
+    \item \textbf{Storage Strategy:} Optimizing PostgreSQL storage for high-concurrency mobile retrieval, focusing on efficient serialization and query response times.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Fullstack Software Engineer (C++)}{Astek Madagascar}{July 2025 -- Dec 2025}{Madagascar}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Native Performance:} Leveraging deep system knowledge to optimize resource-heavy mobile-adjacent modules, reducing latency by 40\% and memory usage by 30\%.
+    \item \textbf{Architecture Foundations:} Applying multi-threaded design patterns to ensure smooth UI performance and data processing in resource-constrained environments.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Lead Fullstack Engineer (Next.js \& Python)}{Doonya Labs}{Nov 2024 -- July 2025}{Hybrid}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Cross-Platform Synergy:} Led the technical strategy for integrating web platforms with unified mobile backends, ensuring API consistency and high availability (99.9\%).
+    \item \textbf{Deployment Automation:} Streamlined deployment cycles by 60\% using Docker and AWS ECS, significantly reducing time-to-market for mobile-adjacent services.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Lead Fullstack Engineer (React \& React Native)}{Gandyam Ligdi (FinTech)}{July 2023 -- Oct 2024}{Remote}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Mobile-First FinTech:} Spearheaded the delivery of secure payment features across React Native, focusing on ACID-compliant transactions and robust error handling.
+    \item \textbf{Optimization:} Improved mobile app responsiveness by 40\% through strategic caching with Redis and UI thread optimization.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Independent Mobile Developer (React Native \& Flutter)}{Freelance}{2019 -- Present}{Remote}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{PMUB (React Native):} Built a horse racing betting platform handling real-time data streams via WebSockets, betting features, and secure payment integrations.
+    \item \textbf{Songre - EliteApp (React Native):} Architected a multi-service super-app (Jobs, E-commerce, Medical, Delivery) supporting clients, sellers, delivery-men, and admins.
+    \item \textbf{Allo Youri (Flutter \& Web):} Implemented an end-to-end delivery platform with real-time GPS tracking (Maps API) and a responsive landing page (allo-youri.com).
+    \item \textbf{Les Genets (Flutter):} Developed a medical service application providing tele-consultations, SOS emergency features, and medical file management.
+    \item \textbf{AppShare (React Native \& Go):} Designed an APK distribution and management tool with a robust Golang backend, optimizing version control and binary sharing.
+    \item \textbf{Dom Immo (NextJS):} Developed the high-performance user interface for an AI-powered real-estate platform.
+    \item \textbf{Educational Chat (React \& Flask):} Built a real-time collaborative chat application for educational environments using Python backends.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Fullstack Software Engineer (React Native • Node • Python)}{N7 Studio}{Apr 2021 -- Apr 2023}{Remote (Canada)}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Mobile Streaming:} Developed features for a high-concurrency streaming platform using React Native, supporting 5,000+ simultaneous mobile sessions.
+    \item \textbf{Automated Testing:} Integrated Detox (E2E) and Jest into CI/CD pipelines, increasing mobile code reliability and reducing production regressions by 60\%.
+\end{itemize}
+
+% Education Section
+\section*{Education}
+\textbf{Master's Degree in Software Engineering} \hfill Université Aube Nouvelle \\
+\textit{Specialization in Distributed Systems and Architecture} \hfill 2022
+
+\textbf{Bachelor's Degree in Computer Networking} \hfill Université Aube Nouvelle \\
+\textit{Focus on Systems Administration and Network Security} \hfill 2021
+
+% Engineering Projects
+\section*{Key Engineering Projects}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{DreamServer (Go):} Engineered a custom HTTP reverse proxy and static file server from scratch. Developed a custom HTTP parser to handle raw TCP connections—essential knowledge for debugging network issues in mobile apps. \\
+    GitHub: \href{https://github.com/bsrodrigue/dreamproxy}{github.com/bsrodrigue/dreamproxy}
+\end{itemize}
+
+% Languages
+\section*{Languages}
+\textbf{English:} C1 (Professional Fluency) | \textbf{French:} Native
+
+\end{document}

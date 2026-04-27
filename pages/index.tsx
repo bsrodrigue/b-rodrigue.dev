@@ -1,80 +1,94 @@
 import Head from "next/head";
 import Link from "next/link";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import settings from "../settings";
+import { useRouter } from "next/router";
+import { getSiteLocale, siteContent } from "../lib/site-content";
 
 export default function Home() {
+  const router = useRouter();
+  const locale = getSiteLocale(router.locale);
+  const t = siteContent[locale].home;
+
   return (
     <>
       <Head>
-        <title>BRodrigue | Fullstack Developer</title>
-        <meta name="description" content="Portfolio of BRodrigue, a Fullstack Developer." />
+        <title>{t.title}</title>
+        <meta name="description" content={t.description} />
       </Head>
 
-      <section>
-        <div className="container" style={{ textAlign: 'center', paddingTop: '4rem' }}>
-          <h1>BRodrigue</h1>
-          <p style={{ fontSize: '1.2rem', color: '#666' }}>Fullstack Developer</p>
-          <p style={{ maxWidth: '600px', margin: '2rem auto' }}>
-            I build accessible, pixel-perfect, and performant web experiences.
-          </p>
+      <div className="container">
+        <section className="home-hero">
+          <div className="eyebrow">{t.eyebrow}</div>
+          <h1 className="home-title">{t.headline}</h1>
+          <p className="home-intro">{t.intro}</p>
 
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', fontSize: '2rem' }}>
-            <a href="https://github.com/bsrodrigue" target="_blank" rel="noreferrer">
-              <FaGithub />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer">
-              <FaLinkedin />
-            </a>
-            <a href="mailto:contact@b-rodrigue.com">
-              <FaEnvelope />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="container">
-          <h2 style={{ textAlign: 'center' }}>Skills</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem' }}>
-            {settings.skills.map((skill, index) => (
-              <span key={index} style={{ padding: '0.5rem 1rem', background: '#f5f5f5', borderRadius: '20px' }}>
-                {skill}
+          <div className="stack-pills">
+            {t.stack.map((item) => (
+              <span key={item} className="stack-pill">
+                {item}
               </span>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section>
-        <div className="container">
-          <h2 style={{ textAlign: 'center' }}>Featured Projects</h2>
-          <div className="projects-grid">
-            {settings.portfolioProjects.slice(0, 6).map((project, index) => (
-              <div key={index} className="project-card">
-                <img src={project.cover} alt={project.title} />
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <a href={project.link} target="_blank" rel="noreferrer">Visit Project &rarr;</a>
+          <div className="hero-actions">
+            <Link href="/portfolio" className="primary-link">
+              {t.ctaPrimary}
+            </Link>
+            <Link href="/blog" className="secondary-link">
+              {t.ctaSecondary}
+            </Link>
+          </div>
+
+          <div className="contact-strip">
+            <a href="mailto:bsrodrigue@gmail.com">bsrodrigue@gmail.com</a>
+            <a href="https://linkedin.com/in/b-rodrigue" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+            <a href="https://github.com/bsrodrigue" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+          </div>
+
+          <div className="proof-row">
+            {t.proof.map((item) => (
+              <div key={item.title} className="proof-item">
+                <strong>{item.title}</strong>
+                <span>{item.text}</span>
               </div>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <Link href="/portfolio">View All Projects</Link>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section>
-        <div className="container">
-          <h2 style={{ textAlign: 'center' }}>About Me</h2>
-          <p style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto' }}>
-            I'm a passionate developer with a knack for building beautiful and functional web applications.
-            I love learning new technologies and solving complex problems.
-            When I'm not coding, you can find me reading, playing video games, or exploring the outdoors.
-          </p>
-        </div>
-      </section>
+        <section>
+          <h2 className="section-title">{t.timelineTitle}</h2>
+          <div className="experience-timeline">
+            {t.experience.map((item) => (
+              <article key={`${item.company}-${item.period}`} className="timeline-entry">
+                <div className="timeline-rail" aria-hidden="true">
+                  <span className="timeline-dot" />
+                </div>
+                <div className="timeline-content">
+                  <div className="job-header">
+                    <div className="company-info">
+                      <h3 className="job-title">{item.role}</h3>
+                      <span className="company-name">{item.company}</span>
+                    </div>
+                    <div className="job-meta">
+                      <span className="job-date">{item.period}</span>
+                      <span>{item.location}</span>
+                    </div>
+                  </div>
+                  <p className="experience-summary">{item.summary}</p>
+                  <ul className="timeline-points">
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
     </>
   );
 }

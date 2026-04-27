@@ -2,15 +2,20 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import md from 'markdown-it';
 import Head from 'next/head';
+import Link from 'next/link';
+import { getSiteLocale, siteContent } from '../../lib/site-content';
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
     const files = fs.readdirSync('articles');
 
-    const paths = files.map((fileName) => ({
-        params: {
-            slug: fileName.replace('.md', ''),
-        },
-    }));
+    const paths = files.flatMap((fileName) =>
+        (locales || ['en']).map((locale) => ({
+            params: {
+                slug: fileName.replace('.md', ''),
+            },
+            locale,
+        }))
+    );
 
     return {
         paths,
@@ -18,33 +23,38 @@ export async function getStaticPaths() {
     }
 }
 
-export async function getStaticProps({ params: { slug } }) {
+export async function getStaticProps({ params: { slug }, locale }) {
     const fileName = fs.readFileSync(`articles/${slug}.md`, 'utf-8');
     const { data: frontmatter, content } = matter(fileName);
     return {
         props: {
             frontmatter,
             content,
+            locale: locale || 'en',
         },
     };
 }
 
-export default function Article({ frontmatter, content }) {
+export default function Article({ frontmatter, content, locale }) {
+    const currentLocale = getSiteLocale(locale);
+    const t = siteContent[currentLocale].article;
+
     return (
         <>
             <Head>
-                <title>{frontmatter.title} | BRodrigue</title>
+                <title>{frontmatter.title} | Rachid Rodrigue BADINI</title>
+                <meta name="description" content={frontmatter.description} />
             </Head>
-            <section style={{ paddingTop: '4rem' }}>
-                <div className="container" style={{ maxWidth: '800px' }}>
-                    <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{frontmatter.title}</h1>
-                    <p style={{ color: '#666', marginBottom: '2rem' }}>{frontmatter.date}</p>
-                    <div
-                        className="markdown-content"
-                        dangerouslySetInnerHTML={{ __html: md().render(content) }}
-                    />
-                </div>
-            </section>
+            <article className="markdown-content">
+                <p style={{ marginBottom: '1rem' }}>
+                    <Link href="/blog">{t.backToBlog}</Link>
+                </p>
+                <h1>{frontmatter.title}</h1>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>{frontmatter.date}</p>
+                <div
+                    dangerouslySetInnerHTML={{ __html: md().render(content) }}
+                />
+            </article>
         </>
     );
 }

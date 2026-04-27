@@ -1,17 +1,1 @@
-/* Minimal Header Styles - mostly handled by globals.css now, but keeping this for safety if needed */
-.header {
-  /* No specific styles needed if using global header tag */
-}
-
-.nav {
-  /* No specific styles needed */
-}
-
-.link {
-  color: #333;
-  font-weight: 500;
-}
-
-.link:hover {
-  color: #0070f3;
-}
+/* Header styles now handled by globals.css */

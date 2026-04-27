@@ -1,0 +1,142 @@
+% Document class and geometry
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{left=1cm,right=1cm,top=1.2cm,bottom=1.2cm}
+
+% Packages
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{FiraSans}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+% Section titles
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{0.6em}{0.4em}
+
+\raggedbottom
+
+% ATS-friendly job header
+\newcommand{\jobheader}[4]{%
+    \textbf{#1} \hfill #2 \\
+    \textit{#3} \hfill \textit{#4}
+    \vspace{0.05cm}
+}
+
+\begin{document}
+
+% Header
+\begin{center}
+    {\LARGE\bfseries Rachid Rodrigue BADINI} \\[0.15cm]
+    \textbf{Senior Backend Engineer | Distributed Systems | Python • Go • C++} \\
+    Email: bsrodrigue@gmail.com | LinkedIn: \href{https://linkedin.com/in/b-rodrigue}{linkedin.com/in/b-rodrigue} | GitHub: \href{https://github.com/bsrodrigue}{github.com/bsrodrigue} \\
+    \textbf{Location:} Burkina Faso, Ouagadougou
+\end{center}
+
+\vspace{0.1cm}
+
+% Summary
+\section*{Professional Summary}
+Senior Backend Engineer with 7+ years of experience building high-availability distributed systems and FinTech platforms. Proven track record in optimizing performance (slashing latency by 40\%) and scaling APIs to 50k+ daily users. Deep expertise in systems programming, database internals, and the full SDLC. Experienced in collaborating with North American teams and delivering high-impact solutions in Agile environments.
+
+% Skills
+\section*{Technical Skills}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Languages:} Python (Expert), Go (Proficient), C++ (Systems/Qt), SQL (PostgreSQL/MySQL), TypeScript
+    \item \textbf{Backend \& Systems:} Distributed Systems, Microservices, Concurrency, Performance Tuning
+    \item \textbf{Infrastructure \& DevOps:} AWS (EC2, S3, Lambda), Docker, Kubernetes, Terraform, CI/CD (GitHub Actions)
+    \item \textbf{Databases \& Cache:} PostgreSQL (Query Tuning, Indexing), Redis, Message Queues (Celery/RabbitMQ)
+    \item \textbf{Networking:} TCP/IP, WebSockets, HTTP/HTTPS, DNS, Load Balancing
+\end{itemize}
+
+% Experience
+\section*{Professional Experience}
+
+\jobheader{Lead Backend Engineer}{DISCOM}{March 2026 -- Present}{Ouagadougou}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{High-Throughput Systems:} Architecting a high-performance server using Django and DRF for large-scale data processing, ensuring zero-latency delivery of hundreds of thousands of rows.
+    \item \textbf{Asynchronous Architecture:} Implementing Redis and Celery for background job processing, successfully decoupling long-running data operations from the request-response cycle.
+    \item \textbf{Data Engineering:} Optimizing PostgreSQL storage and retrieval strategies for massive datasets, focusing on efficient serialization and query performance.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Systems / Backend Engineer (C++)}{Astek Madagascar}{July 2025 -- Dec 2025}{Madagascar}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Performance Optimization:} Re-engineered multithreaded C++/Qt modules, reducing memory footprint by 30\% and slashing system latency by 40\%.
+    \item \textbf{System Architecture:} Developed production-grade C++ services with modular boundaries to ensure long-term maintainability and system stability.
+    \item \textbf{Engineering Excellence:} Implemented rigorous code review standards and failure mode documentation, reducing production bugs by 15\%.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Lead Backend Engineer}{Doonya Labs}{Nov 2024 -- July 2025}{Hybrid}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Scalability:} Architected a Django/DRF platform handling 50,000+ daily API requests with 99.9\% availability.
+    \item \textbf{Data Engineering:} Built high-performance ETL pipelines using pandas/NumPy to process millions of records for real-time analytics.
+    \item \textbf{Infrastructure:} Orchestrated containerized workloads using Kubernetes on AWS, improving deployment frequency via CI/CD automation.
+    \item \textbf{Leadership:} Mentored a cross-functional team of 4 engineers, leading SCRUM ceremonies and driving architectural decisions.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Lead Backend Engineer (FinTech)}{GandyamLigdi}{July 2023 -- Oct 2024}{Remote}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Financial Systems:} Engineered secure, ACID-compliant financial APIs processing 10,000+ monthly high-value transactions.
+    \item \textbf{Architecture:} Designed a decoupled microservices ecosystem utilizing the Repository Pattern and Dependency Injection.
+    \item \textbf{Optimization:} Enhanced throughput by 40\% through strategic Redis caching and PostgreSQL query refactoring.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Backend Software Engineer}{N7 Studio}{Apr 2021 -- Apr 2023}{Remote (Canada)}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{High-Concurrency:} Developed Node.js + GraphQL services for a streaming platform supporting 5,000+ simultaneous users.
+    \item \textbf{Reliability:} Integrated comprehensive testing suites (PyTest, Cypress) into automated pipelines, achieving 85\% code coverage.
+    \item \textbf{Efficiency:} Reduced API response times by 45\% by implementing database connection pooling and query optimization.
+\end{itemize}
+
+\vspace{0.15cm}
+
+\jobheader{Linux System Administrator (Contract)}{ANPTIC}{Mar 2021 -- June 2021}{Ouagadougou}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{Kernel Tuning:} Customized and rebuilt Linux kernels to support specialized hardware drivers and security hardening.
+    \item \textbf{High Availability:} Deployed a redundant Jitsi Meet cluster for 200+ concurrent users, ensuring zero-downtime during peak hours.
+\end{itemize}
+
+% Education Section
+\section*{Education}
+
+\textbf{M.Sc. Software Engineering} \hfill Universite Aube Nouvelle \\
+\textit{Specialization in Distributed Systems and Architecture} \hfill 2021 -- 2022
+
+\vspace{0.2cm}
+
+\textbf{B.Sc. Computer Networking} \hfill Universite Aube Nouvelle \\
+\textit{Focus on TCP/IP, Linux Systems, and Network Security} \hfill 2017 -- 2021
+
+% Key Engineering Projects
+\section*{Key Engineering Projects}
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{DreamServer (Go):} Engineered a custom HTTP reverse proxy and static file server from scratch. Developed a custom HTTP parser to handle raw TCP connections, transparent header forwarding, and structured logging with latency tracking. \\
+    GitHub: \href{https://github.com/bsrodrigue/dreamproxy}{github.com/bsrodrigue/dreamproxy}
+\end{itemize}
+
+\vspace{0.1cm}
+
+% Languages
+\section*{Languages}
+\textbf{English:} C1 (Professional Fluency) | \textbf{French:} Native
+
+\end{document}
