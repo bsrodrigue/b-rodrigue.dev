@@ -204,10 +204,9 @@ export const siteContent = {
       title: "Rachid Rodrigue BADINI | Développeur Fullstack",
       description:
         "Développeur fullstack spécialisé en React, React Native, Python, Django et PostgreSQL.",
-      eyebrow: "Ingénieur Backend & Systèmes Senior",
-      headline: "👋 Salut, je suis Rodrigue",
-      intro:
-        "⚡ Python | Go | C/C++ | Linux | Passionné par les réseaux & Minimaliste",
+      eyebrow: "Ingénieur Fullstack Senior",
+      headline: "BADINI Rachid Rodrigue",
+      intro: "Un amour profond pour la tech et l'ingénierie",
       aboutTitle: "🧑 À propos de moi",
       aboutList: [
         "🔧 Programmeur autodidacte, passionné par la création de systèmes complexes avec des conceptions simples.",
@@ -224,13 +223,20 @@ export const siteContent = {
         "Approfondissement en Linux, réseaux et bases de données.",
         "Création d'outils de développement efficaces.",
       ],
-      stack: ["Python", "Go", "C/C++", "Linux", "Réseaux"],
+      stack: [
+        "Python",
+        "Javascript",
+        "Go",
+        "Conception de systèmes",
+        "Linux",
+        "Réseaux",
+      ],
       ctaPrimary: "Voir le portfolio",
       ctaSecondary: "Lire les articles",
       proof: [
-        { title: "7+ ans", text: "de produits livrés" },
-        { title: "Web + mobile", text: "expérience de livraison" },
-        { title: "Django + Postgres", text: "socle backend" },
+        { title: "7+ ans", text: "Expérience professionnelle en ingénierie" },
+        { title: "React + React Native", text: "Qualité de bout en bout" },
+        { title: "Django + Postgres", text: "Expertise Backend" },
       ],
       timelineTitle: "Parcours professionnel",
       experience: [
@@ -349,11 +355,9 @@ export const siteContent = {
     },
     blog: {
       title: "Blog | Rachid Rodrigue BADINI",
-      description:
-        "Articles et réflexions sur le développement, les systèmes et la tech.",
-      heroTitle: "Blog",
-      heroSubtitle:
-        "Articles et réflexions sur le développement, les systèmes et la tech.",
+      description: "Articles et essais sur tout ce qui compte pour moi",
+      heroTitle: "Articles & Essais",
+      heroSubtitle: "Articles et essais sur tout ce qui compte pour moi",
       recentTitle: "Articles récents",
       readMore: "Lire la suite ->",
       searchPlaceholder: "Rechercher des articles...",
