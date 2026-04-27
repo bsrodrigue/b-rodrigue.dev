@@ -1,21 +1,40 @@
 ---
 title: "Intellectual Apathy"
 metaTitle: "Intellectual Apathy"
-metaDesc: "Intellectual apathy is the lack of interest in intellectual activities."
+metaDesc: "Intellectual Apathy - "
 date: "2026-04-27"
 category: essay
 tags:
   - philosophy, education
 ---
-It is very common to hear that the human species is different from all the other species known on Earth due to our high intelligence. It cannot be denied that as a species, we are generally more "sophisticated" than other species. The average human is probably smarter than any animal.
+## The most intelligent species on Earth
 
-But even among humans, there are huge disparities. It is common to hear that humanity is great because we built this, we invented that, we discovered this and that. We claim it as if we were collectively working to reach our maximum intellectual potential. But in reality, only a minority of humans actually uses their brains to such endeavor. I am not saying that most humans are dumb. The reality is that most humans on average don't feel engaged by intellectual activities. The potential is here, but not the desire. Only a minority of "geniuses" did the heavy lifting.
+It is very common to hear that the human species is different from all the other species known on Earth due to our high intelligence. It cannot be denied that as a species, we are generally more "sophisticated" than our fellow sentient creatures. It is common to hear that humanity is great because we built this and we invented that, but when we look closer, it appears that only a few humans do the actual heavy-lifting. 
 
-Intelligence is what I call a "Pseudo Value".
-If you ask a woman if she values being beautiful, she'll mostly likely say yes. And she'll have the behavior to back up her claim. Women spend immense amount of money in beauty products. But ask her if she values intelligence, she'll probably say yes too, but yet, she spends almost nothing in cultivating intelligence, knowledge and sophistication. 
-I call this a "Pseudo Value" because we collectively claim to find intelligence important yet we do almost nothing to cultivate it.
+The goal of this short essay is not to belittle the intelligence of the common man. I have no doubt that if your life depended on it, you could become a rocket scientist (given enough time of course) and do complex mathematics. I've seen many people I wrongly assumed to be unintelligent display the capacity to come up with creative solutions and easily grasp concepts I struggled with. And this is exactly the object of my reflection. Why is it that despite our apparent fascination with human intelligence, only a minority seem naturally attracted to "intelligent stuff"? This is where my concept of pseudo-value can come handy.
 
-Let's face it, using your brain is hard. It is not intuitive. It requires special mental effort and attention. Like with workout, some people genuinely enjoy the pain, and some people hate it. Again, I'm not saying that the average Joe cannot run a marathon, I am not arguing over potential here, I am talking about the desire and the interest. If your life depended on it and if you had enough time, you could definitely learn hard mathematics, science and engineering, I don't doubt it a second. But people generally don't need to be threatened to be greedy, to like gossip, to want to dress well. Intelligence is just not a priority.
+## How values drive our lives
+
+Do you value money? Chances are, you do, like most people. Money allows us to acquire food, water and shelter, things we also value a lot, it is obvious then, why we would value money, it reflects in how we live our lives. Most of us wake up in the morning in order to get that money, we undergo long and painful years of school and college to learn skills we otherwise wouldn't care of, just in order raise our value in the labor market. It is clear then that we really value money.
+
+But what about intelligence? 
+
+If you ask the average woman if she beauty, she'll likely say yes. And she'll have the behavior to back up her claim. Women spend an immense amount of money in beauty products, it is absolutely safe to believe that they value their physique more than men, but what if you asked about intelligence? I'd safely assume that she would give the same answer, yet, she spends almost nothing in cultivating intelligence and knowledge. This is what I mean by *pseudo-value*
+It is when (knowingly or not) your behavior does not match your claimed values. 
+
+But why do people even bother having values they cannot live by? 
+
+## Nobody wants to look stupid
+
+In my experience, people have generally an easier time admitting they are not wealthy or pretty, but few are comfortable saying "I am not smart". But at the same time, we rarely hear about people being insecure about their cognitive abilities, they exist, but they are dwarfed by physical related insecurities. 
+
+This suggests that we paradoxically attach a social importance to looking mentally fit enough, even if we don't use or maintain this fitness. We tacitly agree that each human being must have some baseline intelligence in order to be well functioning members of society. 
+
+For the average person, showing that you value intelligence is like showing that you value justice and generosity, even if you never give to charity.
+
+a society always performs at the level of its lowest common denominator, not its peak achievers. 
+
+Let's face it, using your brain is hard. It is not intuitive. It requires special effort and attention. Like with workout, some people genuinely enjoy the pain, and some people hate it. Again, I'm not saying that the average Joe cannot run a marathon, I am not arguing over potential here, I am talking about the desire and the interest. If your life depended on it and if you had enough time, you could definitely learn hard mathematics, science and engineering, I don't doubt it a second. But people generally don't need to be threatened to be greedy, to like gossip, to want to dress well. Intelligence is just not a priority.
 
 You don't need to force people to be greedy, to want material wealth, to want beauty, but you need to force them to get an education.
 
@@ -29,10 +48,6 @@ What do I consider as intellectual activities?
 Reading books, being interested in science, technology, literature, philosophy, playing chess or other intellectually demanding activities.
 
 The human brain power is not unlimited. We have finite lifetime on Earth, and we are inherently social creatures. I suspect that most of our brainpower is used for coping with life in a society. 
-
-### Is being smart even valuable?
-
-Cultivating your intelligence can definitely have excellent and lucrative outcomes for you.
 
 ### The possible causes
 
@@ -50,19 +65,3 @@ It feels that most of humanity has this kind of reasoning. The seem to think tha
 We live in a world where we want people to immediately know, but we hate them for taking time to learn and master a topic. If you know a topic, that's cool and maybe impressive, but if you try to take a deep dive, people will call it a waste of time.
 
 Whenever I want to implement a solution, I prefer drawing a diagram to make sure I understand the problem well. But the person who wants me to implement the solution is looking over my shoulder and I feel the pressure to hurry up and pretend I understand the whole problem and just start to implement the solution already. The more time I take to design and plan, the more angry the person looks to me. It feels like "I don't care if you understand the problem, just solve it already!"
-
-### The normie defines intelligence based on what suits him
-
-- When far from smart people, the normie believes in intelligence.
-- When a smart guy "annoys" him, his definition of intelligence becomes very flexible.
-
-
-### How to respond to retardedness
-
-Whenever someone tries to downplay you for trying to be smart, ask them if they find you stupid. Then ask them if they find you smart. Then ask them why they don't think you can be smarter than they think. If they keep downplaying, tell them that maybe they have low standards towards themselves and believe a smart guy cannot be in their social circle.
-
-
-
-### On setting standards
-
-Ever noticed how normies people are proud to say they know this and this celebrity? They know the latest news about the most mediocre and untalented people in the world.
