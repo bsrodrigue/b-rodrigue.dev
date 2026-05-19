@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { animate, inView } from "framer-motion";
 
 const revealSelectors = [
   "section",
@@ -24,36 +25,56 @@ export default function MotionEffects() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    const root = document.documentElement;
+    const viewportHeight = window.innerHeight;
     const elements = Array.from(document.querySelectorAll<HTMLElement>(revealSelectors));
+    const revealTargets = elements.filter((element) => element.getBoundingClientRect().top > viewportHeight * 0.72);
 
-    root.classList.add("motion-ready");
-
-    elements.forEach((element, index) => {
-      element.classList.remove("is-visible");
-      element.classList.add("reveal-target");
-      element.style.setProperty("--reveal-delay", `${Math.min(index % 6, 5) * 70}ms`);
+    revealTargets.forEach((element, index) => {
+      element.style.opacity = "0";
+      element.style.transform = "translateY(30px)";
+      element.style.willChange = "opacity, transform";
+      element.dataset.motionDelay = `${Math.min(index % 5, 4) * 0.055}`;
     });
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+    const reveal = (target: HTMLElement) => {
+      const delay = Number(target.dataset.motionDelay || 0);
 
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
+      animate(
+        target,
+        {
+          opacity: 1,
+          transform: "translateY(0px)",
+        },
+        {
+          delay,
+          duration: 0.68,
+          ease: [0.16, 1, 0.3, 1],
+        }
+      ).then(() => {
+        target.style.willChange = "auto";
+      });
+    };
+
+    const cleanup = inView(
+      revealTargets,
+      (element) => {
+        reveal(element as HTMLElement);
       },
       {
-        rootMargin: "0px 0px -12% 0px",
-        threshold: 0.12,
+        margin: "0px 0px -12% 0px",
+        amount: 0.12,
       }
     );
 
-    elements.forEach((element) => observer.observe(element));
+    const fallback = window.setTimeout(() => {
+      revealTargets.forEach((target) => {
+        if (target.style.opacity === "0") reveal(target);
+      });
+    }, 1600);
 
     return () => {
-      observer.disconnect();
+      cleanup();
+      window.clearTimeout(fallback);
     };
   }, [router.asPath]);
 

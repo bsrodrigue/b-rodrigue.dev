@@ -2,6 +2,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Meta from "./Meta/meta";
 import MotionEffects from "./MotionEffects";
+import MotionPage from "./MotionPage";
 
 const Layout: React.FC = ({ children }) => {
   return (
@@ -9,7 +10,7 @@ const Layout: React.FC = ({ children }) => {
       <Meta />
       <MotionEffects />
       <Header />
-      <main>{children}</main>
+      <MotionPage>{children}</MotionPage>
       <Footer />
     </>
   );

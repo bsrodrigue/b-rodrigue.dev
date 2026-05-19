@@ -133,7 +133,6 @@ img:hover {
 /* Main Layout */
 main {
   padding: 6rem 0;
-  animation: pageReveal 520ms var(--ease-out) both;
 }
 
 
@@ -229,8 +228,6 @@ footer {
 /* Sections */
 section {
   margin-bottom: 8rem;
-  animation: contentReveal 650ms var(--ease-out) both;
-  animation-delay: 80ms;
 }
 
 .section-title {
@@ -239,7 +236,6 @@ section {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  animation: contentReveal 520ms var(--ease-out) both;
 }
 
 .section-title::after {
@@ -248,7 +244,6 @@ section {
   height: var(--border-width);
   background: var(--border-color);
   transform-origin: left;
-  animation: lineReveal 700ms var(--ease-out) 180ms both;
 }
 
 
@@ -805,50 +800,6 @@ section {
   border-color: rgba(99, 102, 241, 0.4);
   box-shadow: 0 10px 40px -10px var(--primary-glow);
   transform: translateY(-4px);
-}
-
-.project-card,
-.blog-item,
-.timeline-entry,
-.about-card,
-.proof-item,
-.project-block,
-.feature-row,
-.changelog-entry,
-.challenge-card,
-.metric-card {
-  animation: contentReveal 620ms var(--ease-out) both;
-}
-
-.projects-grid > *:nth-child(2),
-.blog-list > *:nth-child(2),
-.experience-timeline > *:nth-child(2),
-.project-snapshot-grid > *:nth-child(2),
-.feature-matrix > *:nth-child(2),
-.changelog-tree > *:nth-child(2),
-.challenge-grid > *:nth-child(2),
-.metric-grid > *:nth-child(2) {
-  animation-delay: 80ms;
-}
-
-.projects-grid > *:nth-child(3),
-.blog-list > *:nth-child(3),
-.experience-timeline > *:nth-child(3),
-.project-snapshot-grid > *:nth-child(3),
-.feature-matrix > *:nth-child(3),
-.changelog-tree > *:nth-child(3),
-.challenge-grid > *:nth-child(3),
-.metric-grid > *:nth-child(3) {
-  animation-delay: 140ms;
-}
-
-.projects-grid > *:nth-child(n + 4),
-.blog-list > *:nth-child(n + 4),
-.experience-timeline > *:nth-child(n + 4),
-.project-snapshot-grid > *:nth-child(n + 4),
-.feature-matrix > *:nth-child(n + 4),
-.changelog-tree > *:nth-child(n + 4) {
-  animation-delay: 200ms;
 }
 
 .project-cover-wrapper {
@@ -1666,21 +1617,6 @@ section {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.motion-ready .reveal-target {
-  opacity: 0;
-  transform: translateY(32px);
-  animation: none;
-  transition:
-    opacity 720ms var(--ease-out) var(--reveal-delay, 0ms),
-    transform 720ms var(--ease-out) var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
-}
-
-.motion-ready .reveal-target.is-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 @keyframes lineReveal {
