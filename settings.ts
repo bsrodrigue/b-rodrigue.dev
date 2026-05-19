@@ -1,7 +1,6 @@
 import { PortfolioProject, Service } from "./interfaces";
 
 const services: Service[] = [
-
   {
     icon: "react",
     title: "Next.js & React Frontend Development",
@@ -22,7 +21,6 @@ const services: Service[] = [
     description:
       "Nest.js became my backend framework of choice for my projects. Whether you want a REST or GraphQL API, I can build one for you.",
   },
-
 ];
 
 const portfolioProjects: PortfolioProject[] = [
@@ -78,6 +76,50 @@ const portfolioProjects: PortfolioProject[] = [
     },
     link: "https://dom.immo/",
     cover: "/images/projects/domimmo.jpg",
+    kind: "client",
+    type: "website",
+  },
+  {
+    title: "GandyamPay Website",
+    description: {
+      en: "Landing page for a payment-focused client product.",
+      fr: "Page d'atterrissage pour un produit client orienté paiement.",
+    },
+    link: "https://gandyampay.com",
+    cover: "/images/projects/gandyampay.png",
+    kind: "client",
+    type: "website",
+  },
+  {
+    title: "GandyamPay Mobile App",
+    description: {
+      en: "Mobile application for a payment-focused client product.",
+      fr: "Application mobile pour un produit client orienté paiement.",
+    },
+    link: "https://play.google.com/store/apps/details?id=com.gandyampay.main_app",
+    cover: "/images/projects/gandyampay_mobile.png",
+    kind: "client",
+    type: "application",
+  },
+  {
+    title: "Allo-Youri Landing Page",
+    description: {
+      en: "Landing page for a delivery-focused client product with real-time logistics flows.",
+      fr: "Landing page pour un produit client orienté livraison avec des flux logistiques temps réel.",
+    },
+    link: "https://allo-youri.com",
+    cover: "/images/projects/allo-youri.jpg",
+    kind: "client",
+    type: "website",
+  },
+  {
+    title: "PEB.BF",
+    description: {
+      en: "A modern information hub and service platform for investors in Burkina Faso.",
+      fr: "Un centre d'information et de services modernes pour les investisseurs au Burkina Faso.",
+    },
+    link: "https://peb.bf",
+    cover: "/images/projects/peb.png",
     kind: "client",
     type: "website",
   },
