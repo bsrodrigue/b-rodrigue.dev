@@ -47,7 +47,6 @@ export const siteContent = {
         "Deepening knowledge in Linux, networking, and databases.",
         "Building efficient developer tooling and frameworks.",
       ],
-      summary: "Fullstack engineer with 5+ years of experience designing scalable web applications, distributed backend systems, and high-performance user interfaces using Python, Django, FastAPI, React, Next.js, TypeScript, PostgreSQL, Redis, Docker, and Kubernetes. Experienced in application performance improvement, database optimization, and building reliable APIs for production environments. Combines deep backend infrastructure knowledge with modern frontend development to deliver end-to-end solutions.",
       stack: [
         "Python",
         "TypeScript",

@@ -59,10 +59,6 @@ export default function Home() {
         </section>
 
         <section>
-          <p className="professional-summary">{t.summary}</p>
-        </section>
-
-        <section>
           <div className="about-grid">
             <div className="about-card">
               <h3>{t.aboutTitle}</h3>
