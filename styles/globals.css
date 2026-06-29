@@ -881,6 +881,25 @@ section {
   opacity: 0.5;
 }
 
+.infra-card {
+  background: linear-gradient(135deg, rgba(0, 170, 255, 0.05), rgba(0, 170, 255, 0.01));
+  border-color: var(--primary-color);
+}
+
+.infra-card .project-content {
+  padding-top: 2rem;
+}
+
+.infra-card::before {
+  content: "☰";
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  opacity: 0.6;
+}
+
 
 .project-link {
   display: inline-flex;
@@ -1554,6 +1573,50 @@ section {
   color: var(--primary-color);
   font-family: var(--font-mono);
   font-weight: 700;
+}
+
+.professional-summary {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 800px;
+  margin-bottom: 4rem;
+}
+
+.education-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.education-entry {
+  padding: 2rem;
+  border: var(--border-width) solid var(--border-color);
+}
+
+.education-entry h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.education-school {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+}
+
+.education-specialization {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.education-period {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
 .markdown-content blockquote {

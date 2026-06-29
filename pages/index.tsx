@@ -59,6 +59,10 @@ export default function Home() {
         </section>
 
         <section>
+          <p className="professional-summary">{t.summary}</p>
+        </section>
+
+        <section>
           <div className="about-grid">
             <div className="about-card">
               <h3>{t.aboutTitle}</h3>
@@ -105,6 +109,20 @@ export default function Home() {
                     ))}
                   </ul>
                 </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="section-title">Education</h2>
+          <div className="education-list">
+            {t.education.map((item) => (
+              <article key={item.degree} className="education-entry">
+                <h3>{item.degree}</h3>
+                <p className="education-school">{item.school}</p>
+                <p className="education-specialization">{item.specialization}</p>
+                <span className="education-period">{item.period}</span>
               </article>
             ))}
           </div>

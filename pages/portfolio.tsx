@@ -43,6 +43,7 @@ const PortfolioPage: React.FC = () => {
             case "website": return t.typeWebsite;
             case "game": return t.typeGame;
             case "cli": return t.typeCli;
+            case "infrastructure": return t.typeInfrastructure;
             default: return type;
         }
     };
@@ -62,14 +63,16 @@ const PortfolioPage: React.FC = () => {
             return acc;
         }, {} as Record<ProjectType, PortfolioProject[]>);
 
-        return (Object.keys(byType) as ProjectType[]).map(type => (
+        const typeOrder: ProjectType[] = ["application", "infrastructure", "website", "cli", "game"];
+
+        return typeOrder.filter(type => byType[type]).map(type => (
             <div key={type} className="type-group">
                 <h3 className="type-title">{getTypeLabel(type)}</h3>
                 <div className="projects-grid">
                     {byType[type].map((project, index) => (
                         <article 
                             key={`${project.title}-${index}`} 
-                            className={`project-card ${project.type === 'cli' ? 'cli-card' : ''}`}
+                            className={`project-card ${project.type === 'cli' ? 'cli-card' : project.type === 'infrastructure' ? 'infra-card' : ''}`}
                         >
                             {project.cover && (
                                 <div className="project-cover-wrapper">

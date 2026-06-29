@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://b-rodrigue.com</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-05-20T11:03:31.131Z</lastmod></url>
-<url><loc>https://b-rodrigue.com/blog</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-05-20T11:03:31.132Z</lastmod></url>
-<url><loc>https://b-rodrigue.com/portfolio</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-05-20T11:03:31.132Z</lastmod></url>
-<url><loc>https://b-rodrigue.com/projects/buildshare</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-05-20T11:03:31.132Z</lastmod></url>
-<url><loc>https://b-rodrigue.com/projects/dreamproxy</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-05-20T11:03:31.132Z</lastmod></url>
-<url><loc>https://b-rodrigue.com/fr/blog</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-05-20T11:03:31.132Z</lastmod></url>
-<url><loc>https://b-rodrigue.com/articles/intellectual_apathy</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-05-20T11:03:31.132Z</lastmod></url>
-<url><loc>https://b-rodrigue.com/fr/articles/intellectual_apathy</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-05-20T11:03:31.132Z</lastmod></url>
+<url><loc>https://b-rodrigue.com</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-06-29T21:05:28.841Z</lastmod></url>
+<url><loc>https://b-rodrigue.com/blog</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-06-29T21:05:28.841Z</lastmod></url>
+<url><loc>https://b-rodrigue.com/portfolio</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-06-29T21:05:28.841Z</lastmod></url>
+<url><loc>https://b-rodrigue.com/projects/buildshare</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-06-29T21:05:28.841Z</lastmod></url>
+<url><loc>https://b-rodrigue.com/projects/dreamproxy</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-06-29T21:05:28.842Z</lastmod></url>
+<url><loc>https://b-rodrigue.com/fr/blog</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-06-29T21:05:28.842Z</lastmod></url>
+<url><loc>https://b-rodrigue.com/articles/intellectual_apathy</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-06-29T21:05:28.842Z</lastmod></url>
+<url><loc>https://b-rodrigue.com/fr/articles/intellectual_apathy</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2026-06-29T21:05:28.842Z</lastmod></url>
 </urlset>

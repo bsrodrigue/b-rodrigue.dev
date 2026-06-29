@@ -1,5 +1,5 @@
 export type ProjectKind = "client" | "employer" | "personal";
-export type ProjectType = "application" | "website" | "game" | "cli";
+export type ProjectType = "application" | "website" | "game" | "cli" | "infrastructure";
 
 export interface PortfolioProject {
   title: string;

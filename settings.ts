@@ -146,6 +146,17 @@ const portfolioProjects: PortfolioProject[] = [
     type: "application",
   },
   {
+    title: "Successchool",
+    description: {
+      en: "Online school platform built for a client in France. Developed alongside Senegalese engineers as a freelance contract, leading frontend development, code quality, and feature delivery.",
+      fr: "Plateforme d'école en ligne pour un client en France. Développée avec des ingénieurs sénégalais en freelance, avec prise en charge du frontend, de la qualité du code et de la livraison des fonctionnalités.",
+    },
+    link: "https://espace-membre.succeschool.com/",
+    cover: "/images/projects/succeschool.png",
+    kind: "client",
+    type: "website",
+  },
+  {
     title: "Buildshare",
     description: {
       en: "Internal Android build distribution platform with a Django backend, async APK processing, and a React Native client.",
@@ -185,8 +196,9 @@ const portfolioProjects: PortfolioProject[] = [
       fr: "Un proxy inverse et serveur de fichiers statiques en Go, construit from scratch pour explorer le parsing HTTP, TCP et les internals serveur.",
     },
     link: "/projects/dreamproxy",
+    cover: "/images/projects/dreamproxy.png",
     kind: "personal",
-    type: "cli",
+    type: "infrastructure",
     linkType: "internal",
   },
   {
@@ -249,18 +261,30 @@ const actuality = [
 ];
 
 const skills = [
+  "Python",
+  "TypeScript",
+  "JavaScript",
+  "Go",
+  "C/C++",
+  "Dart",
   "React",
   "Next.js",
-  "TypeScript",
-  "Node.js",
-  "Express",
-  "PostgreSQL",
-  "Tailwind CSS",
   "React Native",
-  "C/C++",
-  "Git",
+  "Flutter",
+  "Node.js",
+  "NestJS",
+  "Django",
+  "FastAPI",
+  "PostgreSQL",
+  "Redis",
   "Docker",
-  "Figma",
+  "Kubernetes",
+  "AWS",
+  "Terraform",
+  "CI/CD",
+  "GraphQL",
+  "Linux",
+  "Git",
 ];
 
 const settings = {
