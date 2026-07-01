@@ -117,40 +117,7 @@ class SingleEntryRecord(BaseRecord):
             )
         ]
 
-
-class TabularRecord(BaseRecord):
-    """
-    Pattern for forms that contain multiple entries per submission,
-    discriminated by a specific item type (e.g. InputType, CottonVariety).
-    Supports multi-item input via API.
-    """
-
-    RECORD_TYPE = RecordType.TABULAR
-
-    # The field name used to discriminate entries (e.g., 'input_type')
-    # MUST be defined in concrete subclasses.
-    ITEM_FIELD: str
-
-    class Meta(BaseRecord.Meta):
-        abstract = True
-
-
-class GranularRecord(BaseRecord):
-    """
-    Pattern for forms that contain thousands of entries (one per SCOOP or Producer).
-    Always supports CSV upload via Viewflow.
-    """
-
-    RECORD_TYPE = RecordType.GRANULAR
-
-    # The linkage mode for this granular record.
-    # MUST be defined in concrete subclasses.
-    LINKAGE_MODE: LinkageMode
-
-    class Meta(BaseRecord.Meta):
-        abstract = True
-
-
+### The rest goes here...
 
 ```
 
@@ -158,31 +125,9 @@ This pattern allows us to create models of each record type and use *meta-progra
 
 ```python
 
-class ProductionObjectiveRecord(SingleEntryRecord):
-    """
-    Objectifs de production.
-    Fiche 03 - 6.3
-    """
-
-    planned_area_ha: models.DecimalField[Decimal, Decimal] = models.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        default=Decimal("0.00"),
-        verbose_name="Superficie prévue (ha)",
-    )
-
-    objective_production_tons: models.DecimalField[Decimal, Decimal] = (
-        models.DecimalField(
-            max_digits=15,
-            decimal_places=2,
-            default=Decimal("0.00"),
-            verbose_name="Objectif de production (tonnes)",
-        )
-    )
-
-    comment: models.TextField[str, str] = models.TextField(
-        blank=True, default="", verbose_name="Commentaire"
-    )
+class ConcreteSingleEntryRecord(SingleEntryRecord):
+	# Add your regular django fields
+	pass
 
 ```
 
@@ -190,22 +135,21 @@ Next, we create a python object that acts as a dynamic registry that will expose
 
 ```python
 # This registry item can then be consumed by third parties
+
  RecordForm(
-                    id="primary_input_needs",
-                    label="Expression des besoins primaires en intrants",
-                    model_class=ExpressionOfPrimaryInputNeedRecord,
-                    serializer_class=ExpressionOfPrimaryInputNeedSerializer,
-                    endpoint="/api/records/inputs/primary/",
-                    record_type=RecordType.GRANULAR,
-                    linkage_mode=LinkageMode.SCOOP,
-                    dynamic_options_endpoints={"input_type": "input-types/"},
-                    idempotency_keys=[
-                        "cotton_campaign",
-                        "scoop",
-                    ],
-                ),
-
-
+	id="primary_input_needs",
+	label="Expression des besoins primaires en intrants",
+	model_class=ExpressionOfPrimaryInputNeedRecord,
+	serializer_class=ExpressionOfPrimaryInputNeedSerializer,
+	endpoint="/api/records/inputs/primary/",
+	record_type=RecordType.GRANULAR,
+	linkage_mode=LinkageMode.SCOOP,
+	dynamic_options_endpoints={"input_type": "input-types/"},
+	idempotency_keys=[
+		"cotton_campaign",
+		"scoop",
+	],
+),
 ```
 
 The key idea is to find a smart and standardized way to create records in order to avoid code duplication. The registry can then be consumed by the React front-end in order to dynamically create and render the forms. The registry exposes the shape of each record, the form filling pattern (singular, tabular, granular), the endpoint to call to submit and query them, etc. This allows us to have a modular form exposing system that allows third parties like front-ends, to represent the forms as they wish.
@@ -217,6 +161,69 @@ This design works perfectly and scales well, adding a new form is equivalent to 
 But this is not where the complexity ends, we have now to consider the csv ingestion problem.
 
 ### Implementation CSV Ingestion Pipeline
+
+This wasn't the most complex part of the project, but it still had interesting challenges. As someone that loves reasoning about performance, this was probably my favorite technical challenge.
+
+The need for a csv ingestion pipeline comes from the fact that some data is way to numerous to be filled in manually, we needed an interface to allow the agents to upload files in a requested format and then load them into our database.
+
+The flow is as follows:
+- Agent picks a csv file and submits to the *Granular Form*.
+- Server receives the file and streams it in memory.
+- Server parses the contents and validates each row (only simple data type checking).
+- Servers creates batches and submits them for bulk upserts in the database.
+
+The platform doesn't need to be a hyper performing ingestion engine, but we still need to keep reasonable throughput, especially while using slow languages like python.
+
+Here is an example measurement of one of our ingestion processes with 20K chunk size:
+
+| Metric                               |                     Value |
+| ------------------------------------ | ------------------------: |
+| Total rows                           |                    16,581 |
+| Rows processed                       |                    16,581 |
+| Chunk size                           |                    20,000 |
+| CSV scan                             |                   61.5 ms |
+| Data preload                         |                  134.9 ms |
+| Parsing                              |                   84.8 ms |
+| Database save                        |               11,071.6 ms |
+| Processing phase (excluding preload) |               11,293.6 ms |
+| **Total pipeline time**              | **11,490.1 ms (11.49 s)** |
+| Errors                               |                         0 |
+Loading a csv file in memory with almost 17 thousand rows took 60 ms, we also did some prefetching to gather foreign keys in order to avoid frequent DB lookups. Parsing the file took 85 ms. The largest amount of time was spent loading the data in the database, roughly 12 seconds. 
+
+To put things into perspective, an optimized C parser with SIMD can parse 10 MB of csv in less than 5 ms. The file from the previous table was less than 5 MB. This shows that despite python being terribly slow, the real bottleneck remains the database.
+It is therefore clear that we should focus on how we talk to the database.
+
+> **Observation** 
+> This is a compelling reason to always measure before you try any sort of optimization. Never try to guess and outsmart the machine. Put some logs here and there, measure and compare. You'll be surprised by how little you know about how things really work.
+
+Is the problem due to latency? Not at all, the database currently lives on the same server machine in a different container than the Django application. We also don't use row by row inserts, which would be exponentially slower, we use native PostgreSQL bulk upsert, which is actually fast.
+
+A very large insert statement per chunk size means we are potentially sending megabytes of SQL over the wire until it hits the database. This SQL must be parsed, planned and then executed. which adds some overhead. A good starting point is to leverage the *batch_size* with Django ORM's bulk insert to let PostgreSQL spend less time parsing, and more time executing actual inserts.
+Here are the results for the same data set:
+
+| Metric                               |                   Value |
+| ------------------------------------ | ----------------------: |
+| Batch size                           |                    2000 |
+| Total rows                           |                  16,581 |
+| Rows processed                       |                  16,581 |
+| Chunk size                           |                  20,000 |
+| CSV scan                             |                 32.3 ms |
+| Data preload                         |                 69.7 ms |
+| Parsing                              |                143.1 ms |
+| Database save                        |              4,172.5 ms |
+| Processing phase (excluding preload) |              4,409.0 ms |
+| **Total pipeline time**              | **4,478.7 ms (4.48 s)** |
+| Errors                               |                       0 |
+We went from *11.5 ms to 4.5 ms* which is a huge gain!
+Can we go further?
+
+Remember when we said that each SQL statement must go through the parser and planner? In reality, PostgreSQL provides a way to load data while bypassing these steps. This method is called *COPY* and it is currently the faster way to load massive amounts of data directly in the database. But if it is so fast, why don't we all use it by default? You could've guessed it, everything comes with a trade-off. 
+
+For a platform that needs to guarantee integrity and correctness, using *COPY* comes at a risk. 
+
+
+
+### Implementation - Concurrency model
 
 Despite the low user count, we have to be wary of the large quantity of data that can be produced over time and put a strain on the database. The heaviest write operation is directly related to how the granular records work: the user uploads a csv file and the server asynchronously processes it.
 
@@ -230,13 +237,4 @@ Why not async? Our celery workers rely on Django, a framework mainly built with 
 In order to support 100 concurrent processing, let's consider what it implies. It starts with 100 POST requests to upload the csv files. We need enough gunicorn workers to handle them. We can create 4 gthread workers that will each spawn 25 threads. This will make a total of 100 threads to handle the requests concurrently. Given that uploading (and the usual workload) is IO bound, all the threads will very likely have equal chance to run. 
 
 Our largest csv test file is roughly 5MB with overall 200k rows, which reflects the largest set of data among the cotton societies. For better safety, we will cap the file-size to 10MB. If 100 concurrent uploads happen, it means, parsing all the files without streaming will load 100 x 10MB = 1GB in memory, which is not optimal, we will of course stream.
-
-
-
-
-
-
-
-
-
 

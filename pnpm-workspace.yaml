@@ -1,0 +1,7 @@
+allowBuilds:
+  '@fortawesome/fontawesome-common-types': set this to true or false
+  '@fortawesome/fontawesome-svg-core': set this to true or false
+  '@fortawesome/free-brands-svg-icons': set this to true or false
+  '@fortawesome/free-regular-svg-icons': set this to true or false
+  '@fortawesome/free-solid-svg-icons': set this to true or false
+  unrs-resolver: set this to true or false
