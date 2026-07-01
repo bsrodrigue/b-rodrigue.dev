@@ -38,6 +38,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      highlight.js:
+        specifier: ^11.11.1
+        version: 11.11.1
       markdown-it:
         specifier: ^12.3.2
         version: 12.3.2
@@ -1398,6 +1401,10 @@ packages:
 
   hastscript@7.2.0:
     resolution: {integrity: sha512-TtYPq24IldU8iKoJQqvZOuhi5CyCQRAbvDOX0x1eW6rsHSxa/1i2CCiptNTotGHJ3VoHRGmqiv6/D3q113ikkw==}
+
+  highlight.js@11.11.1:
+    resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
+    engines: {node: '>=12.0.0'}
 
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
@@ -3726,7 +3733,7 @@ snapshots:
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.10
       eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@7.32.0))(eslint@7.32.0)
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@6.21.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@6.21.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.10.1)(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@7.32.0)
       eslint-plugin-react: 7.37.5(eslint@7.32.0)
       eslint-plugin-react-hooks: 5.0.0-canary-7118f5dd7-20230705(eslint@7.32.0)
@@ -3756,7 +3763,7 @@ snapshots:
       tinyglobby: 0.2.16
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@6.21.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@6.21.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.10.1)(eslint@7.32.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -3771,7 +3778,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@6.21.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@6.21.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.10.1)(eslint@7.32.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -4314,6 +4321,8 @@ snapshots:
       hast-util-parse-selector: 3.1.1
       property-information: 6.5.0
       space-separated-tokens: 2.0.2
+
+  highlight.js@11.11.1: {}
 
   hoist-non-react-statics@3.3.2:
     dependencies:
