@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap");
 
 :root {
   --bg-color: #000000;
@@ -6,14 +6,27 @@
   --surface-color: #000000;
   --surface-hover: #111111;
   --border-color: #ffffff;
-  --primary-color: #00aaff; /* Tech Azure Accent */
+  --primary-color: #00aaff;
   --primary-glow: rgba(0, 170, 255, 0.2);
   --accent-color: #00aaff;
   --text-primary: #ffffff;
   --text-secondary: #cccccc;
   --text-muted: #888888;
+  --code-bg: #1a1b26;
+  --hljs-keyword: #c792ea;
+  --hljs-string: #c3e88d;
+  --hljs-comment: #565f89;
+  --hljs-function: #82aaff;
+  --hljs-number: #f78c6c;
+  --hljs-builtin: #ffcb6b;
+  --hljs-attr: #f07178;
+  --hljs-literal: #ff5370;
+  --hljs-type: #ffcb6b;
+  --hljs-decorator: #89ddff;
+  --hljs-params: #ffcb6b;
   --font-body: "Inter", sans-serif;
   --font-heading: "Inter", sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
@@ -35,12 +48,24 @@
   --surface-color: #ffffff;
   --surface-hover: #f5f5f5;
   --border-color: #000000;
-  --primary-color: #0077cc; /* Deeper Azure for light mode */
+  --primary-color: #0077cc;
   --primary-glow: rgba(0, 119, 204, 0.1);
   --accent-color: #0077cc;
   --text-primary: #000000;
   --text-secondary: #333333;
   --text-muted: #666666;
+  --code-bg: #f6f8fa;
+  --hljs-keyword: #7c3aed;
+  --hljs-string: #059669;
+  --hljs-comment: #9ca3af;
+  --hljs-function: #2563eb;
+  --hljs-number: #d97706;
+  --hljs-builtin: #b45309;
+  --hljs-attr: #dc2626;
+  --hljs-literal: #dc2626;
+  --hljs-type: #b45309;
+  --hljs-decorator: #0891b2;
+  --hljs-params: #b45309;
   --header-bg: #ffffff;
   --header-shadow: none;
   --button-muted-bg: #ffffff;
@@ -187,10 +212,21 @@ header nav a:hover {
 .theme-toggle {
   border: var(--border-width) solid var(--border-color);
   background: transparent;
-  padding: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.theme-toggle:hover {
+  border-color: var(--primary-color);
+}
+
+.theme-icon {
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .language-switcher {
@@ -1382,8 +1418,7 @@ section {
 .blog-item {
   padding: 2rem;
   background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: 1.25rem;
+  border: var(--border-width) solid var(--border-color);
   transition: var(--transition);
 }
 
@@ -1398,14 +1433,30 @@ section {
   color: var(--text-primary);
 }
 
+.blog-item h2:hover {
+  color: var(--primary-color);
+}
+
 .blog-date {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
+}
+
+.blog-category {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
 }
 
 .blog-item p {
   color: var(--text-secondary);
+  margin-bottom: 1.5rem;
 }
 
 .search-wrapper {
@@ -1460,15 +1511,25 @@ section {
   padding: 2rem 1rem;
 }
 
+.reading-content {
+  max-width: 85ch;
+  margin: 0 auto;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
 .markdown-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
   color: var(--text-primary);
+  font-weight: 900;
+  letter-spacing: -0.02em;
 }
 
 .markdown-content h2 {
-  font-size: 1.75rem;
-  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  margin-top: 3rem;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border-color);
@@ -1476,22 +1537,23 @@ section {
 }
 
 .markdown-content h3 {
-  font-size: 1.25rem;
-  margin-top: 1.5rem;
+  font-size: 1.15rem;
+  margin-top: 2rem;
   margin-bottom: 0.75rem;
   color: var(--accent-color);
 }
 
 .markdown-content p {
   color: var(--text-secondary);
-  margin-bottom: 1rem;
-  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  line-height: 1.85;
+  font-size: 1.05rem;
 }
 
 .markdown-content ul,
 .markdown-content ol {
-  margin-bottom: 1rem;
-  padding-left: 2rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
   color: var(--text-secondary);
 }
 
@@ -1501,30 +1563,168 @@ section {
 
 .markdown-content li {
   margin-bottom: 0.5rem;
+  line-height: 1.75;
 }
 
 .markdown-content pre {
-  background: var(--surface-color);
+  background: var(--code-bg);
   border: 1px solid var(--border-color);
-  padding: 1rem;
+  padding: 1.25rem;
   overflow-x: auto;
-  border-radius: 0.75rem;
-  margin-bottom: 1rem;
+  white-space: pre;
+  margin: 1.75rem 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
 }
 
 .markdown-content code {
-  background: var(--surface-color);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.9em;
+  background: rgba(100, 100, 100, 0.15);
+  padding: 0.15rem 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
   color: var(--accent-color);
 }
 
 .markdown-content pre code {
   background: none;
   padding: 0;
+  font-size: 0.85rem;
+  color: inherit;
+}
+
+.markdown-content .hljs {
+  background: transparent;
+  padding: 0;
+}
+
+.markdown-content .hljs-keyword {
+  color: var(--hljs-keyword);
+  font-style: italic;
+}
+
+.markdown-content .hljs-string {
+  color: var(--hljs-string);
+}
+
+.markdown-content .hljs-comment {
+  color: var(--hljs-comment);
+  font-style: italic;
+}
+
+.markdown-content .hljs-title.function_,
+.markdown-content .hljs-title.class_ {
+  color: var(--hljs-function);
+}
+
+.markdown-content .hljs-built_in {
+  color: var(--hljs-builtin);
+}
+
+.markdown-content .hljs-number {
+  color: var(--hljs-number);
+}
+
+.markdown-content .hljs-attr {
+  color: var(--hljs-attr);
+}
+
+.markdown-content .hljs-params {
+  color: var(--hljs-params);
+}
+
+.markdown-content .hljs-literal {
+  color: var(--hljs-literal);
+}
+
+.markdown-content .hljs-type {
+  color: var(--hljs-type);
+}
+
+.markdown-content .hljs-decorator,
+.markdown-content .hljs-meta {
+  color: var(--hljs-decorator);
+}
+
+.markdown-content .hljs-selector-class {
+  color: var(--hljs-builtin);
+}
+
+.markdown-content blockquote {
+  border-left: 3px solid var(--primary-color);
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+  background: rgba(100, 100, 100, 0.06);
+}
+
+.markdown-content a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(0, 170, 255, 0.3);
+  transition: var(--transition);
+}
+
+.markdown-content a:hover {
+  color: var(--accent-color);
+  text-decoration-color: var(--accent-color);
+}
+
+.markdown-content strong {
   color: var(--text-primary);
+  font-weight: 700;
+}
+
+.markdown-content hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2.5rem 0;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border-color);
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid var(--border-color);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+}
+
+.markdown-content th {
+  background: var(--surface-color);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.markdown-content td {
+  color: var(--text-secondary);
+}
+
+.markdown-content pre::-webkit-scrollbar {
+  height: 4px;
+}
+
+.markdown-content pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.markdown-content pre::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 2px;
 }
 
 .about-grid {

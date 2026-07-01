@@ -47,7 +47,7 @@ const Header: React.FC = () => {
             aria-label={theme === "dark" ? t.nav.themeLight : t.nav.themeDark}
             onClick={toggleTheme}
           >
-            {theme === "dark" ? "☀" : "☾"}
+            <span className="theme-icon">{theme === "dark" ? "☀" : "☾"}</span>
           </button>
           <div className="language-switcher" aria-label={t.nav.language}>
           <Link href={router.asPath} locale="en" className={locale === "en" ? "language-link active" : "language-link"}>
