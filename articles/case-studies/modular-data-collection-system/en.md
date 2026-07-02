@@ -7,7 +7,6 @@ category: essay
 tags:
   - case-study, django, python, coding, software design
 ---
-
 # The Rationale
 
 At my job at DISCOM, I had the main responsibility to design and build a data collecting and analysis platform for the cotton industry in Burkina Faso. Our customer (AICB), used to hand out word and excel documents to the different organisms to be filled manually and gathered back for synthesis.
@@ -162,7 +161,7 @@ But this is not where the complexity ends, we have now to consider the csv inges
 
 ### Implementation CSV Ingestion Pipeline
 
-This wasn't the most complex part of the project, but it still had interesting challenges. As someone that loves reasoning about performance, this was probably my favorite technical challenge.
+This wasn't the most complex aspect of the system, but it still had interesting problems. As someone that loves reasoning about performance, this was probably my favorite technical challenge.
 
 The need for a csv ingestion pipeline comes from the fact that some data is way to numerous to be filled in manually, we needed an interface to allow the agents to upload files in a requested format and then load them into our database.
 
@@ -172,13 +171,12 @@ The flow is as follows:
 - Server parses the contents and validates each row (only simple data type checking).
 - Servers creates batches and submits them for bulk upserts in the database.
 
-The platform doesn't need to be a hyper performing ingestion engine, but we still need to keep reasonable throughput, especially while using slow languages like python.
+The platform doesn't need to be a hyper performing ingestion engine, capable of processing millions of rows in a few seconds, but we still need to keep reasonable throughput, especially as we use slow languages like python.
 
-Here is an example measurement of one of our ingestion processes with 20K chunk size:
+Here is an example measurement of one of our first ingestion processes we had with 20 K chunk size:
 
 | Metric                               |                     Value |
 | ------------------------------------ | ------------------------: |
-| Total rows                           |                    16,581 |
 | Rows processed                       |                    16,581 |
 | Chunk size                           |                    20,000 |
 | CSV scan                             |                   61.5 ms |
@@ -187,24 +185,55 @@ Here is an example measurement of one of our ingestion processes with 20K chunk 
 | Database save                        |               11,071.6 ms |
 | Processing phase (excluding preload) |               11,293.6 ms |
 | **Total pipeline time**              | **11,490.1 ms (11.49 s)** |
-| Errors                               |                         0 |
+
 Loading a csv file in memory with almost 17 thousand rows took 60 ms, we also did some prefetching to gather foreign keys in order to avoid frequent DB lookups. Parsing the file took 85 ms. The largest amount of time was spent loading the data in the database, roughly 12 seconds. 
 
-To put things into perspective, an optimized C parser with SIMD can parse 10 MB of csv in less than 5 ms. The file from the previous table was less than 5 MB. This shows that despite python being terribly slow, the real bottleneck remains the database.
-It is therefore clear that we should focus on how we talk to the database.
+To put things into perspective, an optimized C parser with SIMD can parse 10 MB of csv in less than 5 ms. The file from the previous table was less than 1 MB. This shows that despite python being terribly slow, the real bottleneck remains our database logic. It is therefore clear that we should focus on how we talk to the database.
 
 > **Observation** 
 > This is a compelling reason to always measure before you try any sort of optimization. Never try to guess and outsmart the machine. Put some logs here and there, measure and compare. You'll be surprised by how little you know about how things really work.
 
-Is the problem due to latency? Not at all, the database currently lives on the same server machine in a different container than the Django application. We also don't use row by row inserts, which would be exponentially slower, we use native PostgreSQL bulk upsert, which is actually fast.
+We use PostgreSQL as our primary data store. It is not a slow database by any means, it is fully capable of dealing with massive data at scale, we have to investigate how we actually use it.
 
-A very large insert statement per chunk size means we are potentially sending megabytes of SQL over the wire until it hits the database. This SQL must be parsed, planned and then executed. which adds some overhead. A good starting point is to leverage the *batch_size* with Django ORM's bulk insert to let PostgreSQL spend less time parsing, and more time executing actual inserts.
-Here are the results for the same data set:
+Let's first think about an elephant in the room: *indexes*. 
+They can considerably speed up your reads, and they can also nuke your write performances if used wrong. Should we get rid of indexes? I'd say that we should keep them and be wary of how we use them. As a reminder, the platform is both a data collection system and an analytics provider. Storing data is not the only problem, we need to quickly query big loads of data across years with a low budget server and simple architecture.
+
+SOFITEX has today registered very roughly 7 K farmer cooperatives and 200 K farmers. Only a single record tracks data per farmer, and the other granular records track data per cooperative and some other data that can multiply the total rows.
+
+Campaigns can go back to the year 1950 up till today, and our platform should be good enough to be used in the future. If we assume we are in 2030: 80 years x 170.000 rows = 13.600.000 rows! 
+
+Now let's take 20 records for the cooperatives: 20 x 7.000 x 80 = 11.200.000 rows! (We even omitted the multiplicative effect of some records)
+
+SOFITEX by itself could potentially take several millions of row space in the database. We can safely assume that the platform will at production eventually host 50 millions or more rows. Giving up on *indexes* would be shooting ourselves in the foot. A cache-only solution would also bite too much on our RAM. Let's find other solutions.
+
+What about latency? All our services live in containers on the same cloud machine. We also don't use row by row inserts, which would be exponentially slower, instead, we use bulk upserts provided by our Django ORM.
+
+Why *UPSERT* in particular? Let's first define what it is. It doesn't have a special keyword in SQL (at least in PostgreSQL), it is just a like a regular *INSERT* with a fallback strategy consisting in updating fields instead if we happen to trigger a *Unique Constraint* error. In other terms, when you try to create an item that already exists, you can choose to instead update some fields, and you can do this in a single batch in an *atomic* fashion.
+
+The base syntax in PostgreSQL is as follows:
+
+```sql
+INSERT ... ON CONFLICT DO UPDATE
+```
+
+This feature supports many more strategies to deal with conflicts, but this flexibility is not free. It mixes the cost of a regular *INSERT* with additional overhead for handling conflict resolution. If your payload contains a lot of conflicts, it can be penalizing, can we design our application in a way to avoid conflicting data in the first place?
+
+Imagine an agent from a cotton society uploads a csv file with millions of rows for the first time on the platform. No conflicts. Now let's say that a colleague from the same organism logs in to provide additional entries to the aforementioned set of data. Should he delete the entire uploaded set? Or should he be able to just upload whatever new items he wants? Of course, the latter is optimal for better UX. Also consider the situation where agents happen to gather new fresh data.
+It means we need a way to handle duplicate entries as conflicts cannot be avoided easily. It follows then, that using *upserts* is a good decision here and should not be optimized away.
+
+What else can we look after to squeeze out more performance? The size of our SQL payloads maybe?
+
+Even if we assume the raw csv data to have a small byte size, we must not forget that this data has to be formatted and sent along SQL statement. This mix can drastically increase the size of the final payload being sent to the database to be parsed. 
+In a setting where the bandwidth is scarce, this can incur extra-latency along with the parsing.
+
+The total size of the SQL sent for our previous data set is *1412910 bytes* -> *1.41291 MB*. Yet, the original size of the csv file was roughly *350 KB*. Formatting our raw data into a bulk upsert made the original byte size grow by a factor of *4x*. What if we send a *5 MB* csv file? Our measurement gave use *15 MB*! 
+
+All this SQL must be parsed, planned and then executed. which adds overhead. A good starting point is to leverage the *batch_size* with Django ORM's bulk insert to let PostgreSQL spend less time parsing before executing actual inserts.
+Here are the results for the same data set and *5000 batch_size*:
 
 | Metric                               |                   Value |
 | ------------------------------------ | ----------------------: |
-| Batch size                           |                    2000 |
-| Total rows                           |                  16,581 |
+| Batch size                           |                    5000 |
 | Rows processed                       |                  16,581 |
 | Chunk size                           |                  20,000 |
 | CSV scan                             |                 32.3 ms |
@@ -213,15 +242,10 @@ Here are the results for the same data set:
 | Database save                        |              4,172.5 ms |
 | Processing phase (excluding preload) |              4,409.0 ms |
 | **Total pipeline time**              | **4,478.7 ms (4.48 s)** |
-| Errors                               |                       0 |
-We went from *11.5 ms to 4.5 ms* which is a huge gain!
-Can we go further?
 
-Remember when we said that each SQL statement must go through the parser and planner? In reality, PostgreSQL provides a way to load data while bypassing these steps. This method is called *COPY* and it is currently the faster way to load massive amounts of data directly in the database. But if it is so fast, why don't we all use it by default? You could've guessed it, everything comes with a trade-off. 
+We went from *11.5 s to 4.5 s* which is a huge gain! The larger data set of 170 K rows completed in *33 seconds*. Is it fast enough now? Remember that the platform is designed for 100 concurrent users. Most of them will be filling forms, and only a quarter of them require csv uploading. At minimum, we will have roughly *25 x 4 = 100* csv uploads assuming no errors and re-uploads will occur. The aforementioned 170 K rows come from an actual real potential data set from the biggest cotton society, which means that a single csv upload won't take more than a minute for sure. Furthermore, the agent can scroll past the ongoing uploading and take care of other forms (and upload other files). The async nature makes the waiting bearable, especially when they have an entire year to collect their own data and fill our forms.
 
-For a platform that needs to guarantee integrity and correctness, using *COPY* comes at a risk. 
-
-
+Now we have to consider the UX when multiple agents are using our platform concurrently.
 
 ### Implementation - Concurrency model
 
@@ -237,4 +261,13 @@ Why not async? Our celery workers rely on Django, a framework mainly built with 
 In order to support 100 concurrent processing, let's consider what it implies. It starts with 100 POST requests to upload the csv files. We need enough gunicorn workers to handle them. We can create 4 gthread workers that will each spawn 25 threads. This will make a total of 100 threads to handle the requests concurrently. Given that uploading (and the usual workload) is IO bound, all the threads will very likely have equal chance to run. 
 
 Our largest csv test file is roughly 5MB with overall 200k rows, which reflects the largest set of data among the cotton societies. For better safety, we will cap the file-size to 10MB. If 100 concurrent uploads happen, it means, parsing all the files without streaming will load 100 x 10MB = 1GB in memory, which is not optimal, we will of course stream.
+
+
+
+
+
+
+
+
+
 
