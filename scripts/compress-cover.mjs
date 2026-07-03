@@ -53,9 +53,6 @@ function walkAllCovers(dir) {
 }
 
 async function compress(coverPath) {
-  const ext = path.extname(coverPath).toLowerCase();
-  const outPath = coverPath.replace(/(\.\w+)$/, ".webp");
-
   const input = sharp(coverPath);
   const meta = await input.metadata();
 
@@ -64,21 +61,24 @@ async function compress(coverPath) {
     resizeOpts = { width: 1200 };
   }
 
+  const tmpPath = coverPath + ".tmp.webp";
+
   await input
     .resize(resizeOpts)
     .webp({ quality: 80 })
-    .toFile(outPath);
+    .toFile(tmpPath);
 
   const inSize = fs.statSync(coverPath).size;
-  const outSize = fs.statSync(outPath).size;
+  const outSize = fs.statSync(tmpPath).size;
 
   if (outSize < inSize) {
     fs.unlinkSync(coverPath);
+    fs.renameSync(tmpPath, coverPath.replace(/\.\w+$/, ".webp"));
     console.log(
       `  Compressed: ${path.relative(ARTICLES_DIR, coverPath)} (${formatSize(inSize)} → ${formatSize(outSize)})`
     );
   } else {
-    fs.unlinkSync(outPath);
+    fs.unlinkSync(tmpPath);
     console.log(
       `  Skipped (already optimal): ${path.relative(ARTICLES_DIR, coverPath)}`
     );

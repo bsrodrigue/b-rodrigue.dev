@@ -1411,14 +1411,8 @@ section {
 /* Blog Grid */
 .blog-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-}
-
-@media (max-width: 1100px) {
-  .blog-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 720px) {
@@ -1443,7 +1437,7 @@ section {
 
 .blog-item .blog-card-cover {
   display: block;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   border-bottom: var(--border-width) solid var(--border-color);
 }
@@ -1465,7 +1459,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   border-bottom: var(--border-width) solid var(--border-color);
   background: var(--surface-color);
   color: var(--text-muted);

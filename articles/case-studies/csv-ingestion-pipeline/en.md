@@ -153,30 +153,3 @@ Here are the results for the same data set and *5000 batch_size*:
 | **Total pipeline time**              | **4,478.7 ms (4.48 s)** |
 
 We went from *11.5 s to 4.5 s* which is a huge gain! The larger data set of 170 K rows completed in *33 seconds*. Is it fast enough now? Remember that the platform is designed for 100 concurrent users. Most of them will be filling forms, and only a quarter of them require csv uploading. At minimum, we will have roughly *25 x 4 = 100* csv uploads assuming no errors and re-uploads will occur. The aforementioned 170 K rows come from an actual real potential data set from the biggest cotton society, which means that a single csv upload won't take more than a minute for sure. Furthermore, the agent can scroll past the ongoing uploading and take care of other forms (and upload other files). The async nature makes the waiting bearable, especially when they have an entire year to collect their own data and fill our forms.
-
-Now we have to consider the UX when multiple agents are using our platform concurrently.
-
-### Implementation - Concurrency model
-
-Despite the low user count, we have to be wary of the large quantity of data that can be produced over time and put a strain on the database. The heaviest write operation is directly related to how the granular records work: the user uploads a csv file and the server asynchronously processes it.
-
-We use Celery with Redis for async work and must guarantee a good experience for a worst case 4 x 24 = 96 concurrent uploads. At baseline, a celery worker in prefork mode takes us 200MB at rest. It would cost us  200MB x 100 = 20GB of RAM to have 100 ready workers, which is insane and unsustainable. It would be better to have cheaper workers, and given that our task is IO bound, we've opted for thread based workers.
-
-How does multi-threading perform in python?
-First, let's consider what it implies. Python is subject to something called the GIL (Global Interpreter Lock) that prevents multiple thread from running python byte-code in parallel. When one thread is running, the others have to wait their turn. Which means that for a purely CPU-bound workload, you get no performance improvement. But there is an important detail: when one of the thread is blocking on IO, other threads can run, in other terms, multi-threading comes handy with code that blocks often on IO operations (like dealing with databases) This enables concurrency in exchange of thread context switching overhead. 
-
-Why not async? Our celery workers rely on Django, a framework mainly built with synchronous capabilities, and we want to keep things as simple as possible.
-
-In order to support 100 concurrent processing, let's consider what it implies. It starts with 100 POST requests to upload the csv files. We need enough gunicorn workers to handle them. We can create 4 gthread workers that will each spawn 25 threads. This will make a total of 100 threads to handle the requests concurrently. Given that uploading (and the usual workload) is IO bound, all the threads will very likely have equal chance to run. 
-
-Our largest csv test file is roughly 5MB with overall 200k rows, which reflects the largest set of data among the cotton societies. For better safety, we will cap the file-size to 10MB. If 100 concurrent uploads happen, it means, parsing all the files without streaming will load 100 x 10MB = 1GB in memory, which is not optimal, we will of course stream.
-
-
-
-
-
-
-
-
-
-
