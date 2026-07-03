@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 
 const ARTICLES_DIR = "articles";
+const COVER_EXTS = [".webp", ".png", ".jpg", ".jpeg"];
 
 export type ArticleMeta = {
   slug: string;
@@ -12,6 +13,7 @@ export type ArticleMeta = {
   description: string;
   tags: string[];
   locales: string[];
+  cover: string | null;
 };
 
 function hasContent(filePath: string): boolean {
@@ -23,6 +25,14 @@ function hasContent(filePath: string): boolean {
   } catch {
     return false;
   }
+}
+
+function detectCover(dir: string): string | null {
+  for (const ext of COVER_EXTS) {
+    const coverPath = path.join(dir, `cover${ext}`);
+    if (fs.existsSync(coverPath)) return coverPath;
+  }
+  return null;
 }
 
 function walkArticles(dir: string, category: string | null): ArticleMeta[] {
@@ -52,6 +62,7 @@ function walkArticles(dir: string, category: string | null): ArticleMeta[] {
           description: data.metaDesc || data.description || "",
           tags: data.tags || [],
           locales,
+          cover: detectCover(fullPath),
         });
       } else {
         results.push(...walkArticles(fullPath, entry.name));
@@ -66,6 +77,7 @@ function walkArticles(dir: string, category: string | null): ArticleMeta[] {
         description: data.metaDesc || data.description || "",
         tags: data.tags || [],
         locales: ["en"],
+        cover: detectCover(dir),
       });
     }
   }
@@ -73,9 +85,49 @@ function walkArticles(dir: string, category: string | null): ArticleMeta[] {
   return results;
 }
 
+function parseTags(tags: unknown): string[] {
+  if (!Array.isArray(tags)) return [];
+  return tags.flatMap(t => {
+    if (typeof t !== "string") return [];
+    return t.split(",").map(s => s.trim()).filter(Boolean);
+  });
+}
+
 export function getAllArticles(): ArticleMeta[] {
   if (!fs.existsSync(ARTICLES_DIR)) return [];
-  return walkArticles(ARTICLES_DIR, null);
+  const articles = walkArticles(ARTICLES_DIR, null);
+  for (const a of articles) {
+    a.tags = parseTags(a.tags);
+  }
+  articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  syncCovers(articles);
+  return articles;
+}
+
+function syncCovers(articles: ArticleMeta[]): void {
+  const outDir = "public/images/covers";
+  if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir, { recursive: true });
+  }
+  for (const a of articles) {
+    if (!a.cover) continue;
+    const ext = path.extname(a.cover);
+    const dest = path.join(outDir, `${a.slug}${ext}`);
+    try {
+      fs.copyFileSync(a.cover, dest);
+      a.cover = `/images/covers/${a.slug}${ext}`;
+    } catch {
+      a.cover = null;
+    }
+  }
+}
+
+export function resolveCoverPath(slug: string): string | null {
+  for (const ext of COVER_EXTS) {
+    const p = `public/images/covers/${slug}${ext}`;
+    if (fs.existsSync(p)) return `/images/covers/${slug}${ext}`;
+  }
+  return null;
 }
 
 export function resolveArticlePath(slug: string, locale: string): string | null {

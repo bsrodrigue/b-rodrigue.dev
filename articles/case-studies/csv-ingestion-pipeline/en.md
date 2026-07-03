@@ -3,7 +3,12 @@ title: "Case Study #1: How I optimized the throughput of our CSV ingestion pipel
 date: "2026-07-01"
 category: essay
 tags:
-  - case-study, django, python, coding, software design, performance
+  - case-study
+  - django
+  - python
+  - coding
+  - software design
+  - performance
 ---
 # The Rationale
 

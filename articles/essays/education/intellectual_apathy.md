@@ -5,7 +5,8 @@ metaDesc: "Intellectual Apathy - "
 date: "2026-04-27"
 category: essay
 tags:
-  - philosophy, education
+  - philosophy
+  - education
 ---
 ## The most intelligent species on Earth
 

@@ -4,7 +4,7 @@ import md from 'markdown-it';
 import hljs from 'highlight.js';
 import Head from 'next/head';
 import Link from 'next/link';
-import { getAllArticles, resolveArticlePath } from '../../lib/articles';
+import { getAllArticles, resolveArticlePath, resolveCoverPath } from '../../lib/articles';
 import { getSiteLocale, siteContent } from '../../lib/site-content';
 
 const mdRenderer = md({
@@ -43,18 +43,24 @@ export async function getStaticProps({ params: { slug }, locale }) {
 
     const raw = fs.readFileSync(filePath, 'utf-8');
     const { data: frontmatter, content } = matter(raw);
+    const cover = resolveCoverPath(slug);
     return {
         props: {
             frontmatter,
             content,
+            cover,
             locale: locale || 'en',
         },
     };
 }
 
-export default function Article({ frontmatter, content, locale }) {
+export default function Article({ frontmatter, content, cover, locale }) {
     const currentLocale = getSiteLocale(locale);
     const t = siteContent[currentLocale].article;
+
+    const tags: string[] = (frontmatter.tags || []).flatMap(t =>
+        typeof t === "string" ? t.split(",").map(s => s.trim()).filter(Boolean) : []
+    );
 
     return (
         <>
@@ -67,8 +73,18 @@ export default function Article({ frontmatter, content, locale }) {
                     <p style={{ marginBottom: '1rem' }}>
                         <Link href="/blog">{t.backToBlog}</Link>
                     </p>
+                    {cover && (
+                        <img src={cover} alt="" className="article-cover" />
+                    )}
                     <h1>{frontmatter.title}</h1>
-                    <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>{frontmatter.date}</p>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>{frontmatter.date}</p>
+                    {tags.length > 0 && (
+                        <div className="article-tags" style={{ marginBottom: '2rem' }}>
+                            {tags.map(tag => (
+                                <span key={tag} className="article-tag">{tag}</span>
+                            ))}
+                        </div>
+                    )}
                     <div
                         dangerouslySetInnerHTML={{ __html: mdRenderer.render(content) }}
                     />

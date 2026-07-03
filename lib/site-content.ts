@@ -221,6 +221,8 @@ export const siteContent = {
       readMore: "Read more ->",
       searchPlaceholder: "Search articles...",
       noResults: "No articles found matching that search.",
+      filteredBy: "Filtered by",
+      clearFilters: "Clear filters",
     },
     article: {
       backToBlog: "Back to blog",
@@ -434,6 +436,8 @@ export const siteContent = {
       readMore: "Lire la suite ->",
       searchPlaceholder: "Rechercher des articles...",
       noResults: "Aucun article correspondant à la recherche.",
+      filteredBy: "Filtré par",
+      clearFilters: "Effacer les filtres",
     },
     article: {
       backToBlog: "Retour au blog",

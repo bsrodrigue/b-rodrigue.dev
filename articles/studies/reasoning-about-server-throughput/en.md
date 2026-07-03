@@ -3,12 +3,14 @@ title: "How to reason about server throughput"
 date: "2026-07-03"
 category: studies
 tags:
-  - studies, performance, nodejs
+  - studies
+  - performance
+  - nodejs
 ---
 
 How do you scale a platform to support 100 concurrent users? And most importantly, what does it even mean? 
 
-Thinking only in terms users can be misleading because it hides important aspects like:
+Thinking only in terms of users can be misleading because it hides important aspects like:
 - A single user opening a page or doing a single action can trigger many requests (fan-out).
 - Or the opposite, many users can stay on low activity pages that trigger almost no requests.
 - Not all endpoints perform the same.
@@ -23,6 +25,9 @@ On their website, *Deno* markets itself as being more capable at handling reques
 - *Node*: 48700 requests / second
 
 It means that *Deno* is processing each request in *0.0095 ms*. This is an insane amount of time to do HTTP parsing, JSON parsing, business logic and database queries.
+
+> **Important update**
+> After a recent check, it seems that *Deno's website (https://deno.com/)* has updated their benchmarks and is now clearer with better transparency. But the lesson I'm going to teach can still be valuable.
 
 You might've guessed that I am exaggerating, but the point is to show that mere numbers can be misleading and prevent beginners from actually learning and making important decisions. When estimating the actual performance of a server, several components are often missing from discourses, either for marketing reasons, or out of genuine ignorance or lack of care.
 
@@ -39,7 +44,7 @@ In my earlier example, it might've sounded crazy to handle each request in 1/10 
 Imagine the first requests arrive and immediately has to wait for a database connection, why not serving the next request? And so on... As long as you don't write code that blocks your thread, it will be able to pick up new requests and start handling them.
 
 > **Be curious about your numbers**:
->  Even if you are not a huge fan of bench-marking and measurement, I'd recommend every software engineer to know the latency of everyday important system calls and operations that take place on their machines. For instance, I've just measured the time it took for an *accept* system call to complete: **0.002 milliseconds**. It means that you could theoretically call this function *500,000* times in a single second. Of course, it doesn't mean you can handle *500,000 requests per second*.
+>  Even if you are not a huge fan of bench-marking and measurement, I'd recommend every software engineer to know the latency of everyday important system calls and operations that take place on their machines. For instance, I've just measured the time it took for an *accept()* system call to complete: **0.002 milliseconds**. It means that you could theoretically call this function *500,000* times in a single second. Of course, it doesn't mean you can handle *500,000 requests per second*.
 
 But this is not possible for all types of servers and workloads, as I said earlier, your concurrency model matters too. 
 
@@ -56,12 +61,19 @@ Where:
 
 Let's take *Deno*, with a throughput of 100.000 requests per second. They didn't provide the average latency per request, which is important. A server that handles millions of requests per second but takes days to respond is worthless.
 
-So let's assume an average latency of 300 ms. If we convert the throughput into requests per milliseconds, we get *100 requests per millisecond*.
+So let's assume as an example an average latency of 300 ms (it could be faster). If we convert the throughput into requests per milliseconds, we get *100 requests per millisecond*.
 
 Applying the formula means *L = 100 x 300 = 30.000 concurrent requests*. In other terms, the *Deno* server must be able to handle *30 thousand* connections at the same time and service them in roughly *300 milliseconds* in order to achieve an average throughput of *100 thousand requests per second*. 
 
-This is much clearer than just saying "Our system supports 10.000 concurrent users" or "Deno handles 100.000 requests per second." But keep in mind that this model fails as soon as your workload shifts towards CPU-bound tasks. In fact, it can even break it. It is easy to ignore this and only realize it when writing inappropriate code in production.
+This is much clearer than just saying "Our system supports 10.000 concurrent users" or "Deno handles 100.000 requests per second." But keep in mind that this model fails as soon as your workload shifts towards CPU-bound tasks. In fact, it can even break it. The reason is due to how most *async* runtimes work. Under the hood, they implement a single threaded event loop that can switch tasks when it hits an IO operation. This is why it first has to execute the blocking and synchronous code before yielding control back to the event loop.
 
-Never forget that the cheap and abundant concurrency we got was at the expense of a more flexible concurrency. Your server can have many endpoints, it just takes one user hitting the wrong code path to ruin the experience of all subsequent users.
+### Takeaway
 
-So, the next time someone advertises numbers about throughput and concurrent users, you are better equipped to evaluate those claims separate marketing from actual facts.
+The goal of this small post wasn't to teach you everything needed to design performant servers, but rather to give you heuristics and a decent mental model to start reasoning about server performance in the first place. This will also help you understand why certain types of workloads are hard to scale compared to others. Also, the next time you see benchmarks online, you are better equipped to question them.
+
+
+
+
+
+
+

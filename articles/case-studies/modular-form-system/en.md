@@ -3,7 +3,11 @@ title: "Case Study #2: How I designed a modular form system"
 date: "2026-07-01"
 category: essay
 tags:
-  - case-study, django, python, coding, software design
+  - case-study
+  - django
+  - python
+  - coding
+  - software design
 ---
 # The Rationale
 
