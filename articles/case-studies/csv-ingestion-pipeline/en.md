@@ -1,11 +1,9 @@
 ---
-title: "Case Study: Modular Data Collection System"
-metaTitle: "MDCS"
-metaDesc: "Modular Data Collection System - "
+title: "Case Study #1: How I optimized the throughput of our CSV ingestion pipeline"
 date: "2026-07-01"
 category: essay
 tags:
-  - case-study, django, python, coding, software design
+  - case-study, django, python, coding, software design, performance
 ---
 # The Rationale
 
@@ -64,100 +62,6 @@ Which gives us a safe upper bound of 80 concurrent users on the data collection 
 
 Regarding the usage pattern, the vast majority of users will be agents that will fill in forms in random fashion. They can log in every day to make small progress, they can also log in a few times to fill lots of data, who knows. They can also log in to review already provided data and make corrections. It is up the agents of the same organisms to find a work schedule and organization that suits them best. The heaviest operation will be csv uploading and ingestion. Each agent of cotton society and SECOBIO will eventually upload large csv files multiple times. Which means we have a write heavy application in terms of sheer amount of data. Not only to mention that data from previous campaigns (before the development of the platform) will have to be imported in the platform, which means, the platform must support archive data imports.
 
-### Implementation - Modular Record System
-
-I decided to design the solution around the concept of *records*.
-
-A form to be filled is called *record*, and there are three types of records:
-- The *SingleEntryRecord*: A few form fields to fill per record.
-- The *TabularRecord*: The same form fields to fill per selected interest point, for instance, providing information about each type of tool used in cotton production.
-- The *GranularRecord*: A large quantity of data related to a particular item (farmer, group of farmers) that cannot possibly be filled out manually.
-
-Each record type is represented by a dedicated django model class inheriting from *BaseRecord*
-
-```python
-
-class BaseRecord(TimestampedModel):
-    """
-    Base class for all records records.
-    Links to a CampaignRecordSubmission.
-    """
-
-    submission: models.ForeignKey[
-        CampaignRecordSubmission, CampaignRecordSubmission
-    ] = models.ForeignKey(
-        CampaignRecordSubmission,
-        on_delete=models.CASCADE,
-        related_name="%(class)s",
-        verbose_name="Soumission",
-    )
-    submission_id: int
-
-    class Meta:
-        abstract = True
-        ordering = ["pk"]
-        
-
-
-class SingleEntryRecord(BaseRecord):
-    """
-    Pattern for forms that contain exactly one set of data per submission.
-    Example: Global campaign financial summary.
-    """
-
-    RECORD_TYPE = RecordType.SINGLE
-
-    class Meta(BaseRecord.Meta):
-        abstract = True
-        constraints = [
-            models.UniqueConstraint(
-                fields=["submission"],
-                name="unique_%(class)s_per_submission",
-            )
-        ]
-
-### The rest goes here...
-
-```
-
-This pattern allows us to create models of each record type and use *meta-programming* to dynamically add behavior we would manually code:
-
-```python
-
-class ConcreteSingleEntryRecord(SingleEntryRecord):
-	# Add your regular django fields
-	pass
-
-```
-
-Next, we create a python object that acts as a dynamic registry that will expose these records to consumers:
-
-```python
-# This registry item can then be consumed by third parties
-
- RecordForm(
-	id="primary_input_needs",
-	label="Expression des besoins primaires en intrants",
-	model_class=ExpressionOfPrimaryInputNeedRecord,
-	serializer_class=ExpressionOfPrimaryInputNeedSerializer,
-	endpoint="/api/records/inputs/primary/",
-	record_type=RecordType.GRANULAR,
-	linkage_mode=LinkageMode.SCOOP,
-	dynamic_options_endpoints={"input_type": "input-types/"},
-	idempotency_keys=[
-		"cotton_campaign",
-		"scoop",
-	],
-),
-```
-
-The key idea is to find a smart and standardized way to create records in order to avoid code duplication. The registry can then be consumed by the React front-end in order to dynamically create and render the forms. The registry exposes the shape of each record, the form filling pattern (singular, tabular, granular), the endpoint to call to submit and query them, etc. This allows us to have a modular form exposing system that allows third parties like front-ends, to represent the forms as they wish.
-
-We currently have roughly 100 records and total, most of the records (80%) are for the cotton societies and a special cotton society called SECOBIO. We have 24 Granular Records among them. 
-
-This design works perfectly and scales well, adding a new form is equivalent to creating a django model and adding it to the register. The front-end will pick it up and render it and handle form validation and submission. It is also possible to introduce new record types.
-
-But this is not where the complexity ends, we have now to consider the csv ingestion problem.
 
 ### Implementation CSV Ingestion Pipeline
 
