@@ -10,77 +10,83 @@ tags:
   - software design
   - performance
 ---
-# The Rationale
 
-At my job at DISCOM, I had the main responsibility to design and build a data collecting and analysis platform for the cotton industry in Burkina Faso. Our customer (AICB), used to hand out word and excel documents to the different organisms to be filled manually and gathered back for synthesis.
+# Context
 
-This process was slow and error prone. The platform I was going to build would make everybody life's easier. The agents from different organisms would just have to log in, and fill centralized digital forms with progress tracking and validation, making it impossible to miss fields, lose progress and enter invalid data. Our customer could then query the data in an aggregated form and visualize it and generate reports that can be used for intelligence and better decision making.
+At my current job at *DISCOM*, I had the honor to design and build a data collection and analysis platform about the cotton industry in Burkina Faso. Our customer is an important actor in this industry and used to hand out word and excel documents to a couple of organisms to be filled manually and gathered back for synthesis.
 
-The core architecture is quite simple to understand:
-- Data collection
-- Aggregation & Synthesis
-- Monitoring Dashboard
+This process was slow and error prone and the platform I was going to build would make everybody's life easier. The agents from the different organisms would just have to log in, and fill digital forms. The platform would support progress tracking and validation, making it impossible to miss fields, lose progress and enter invalid data. Our customer could then query the data, visualize it and generate reports for intelligence and better decision making that can impact the whole industry.
 
-I voluntarily omitted additional components like: auditing, configuration, etc. Because I wanted to focus on one of the most important parts of the system: Data collection.
+Part of the data collection involves quantities that are too large to be typed manually, I had to come up with a solution.
 
-The platform would be very simple to design and build if we only had to create a few forms to be filled by the different organisms. But it turned out to be a bit tricky.
+# Data Ingestion
 
-Each organism is part of an organism type, and each type of organism must fill different forms without seeing or being able to modify the submissions of other parties. The entire set of forms that must be filled by an organism must be filled every year during periods called *campaigns*. We have an overall of hundred forms and some are more complex than others. Some are just basic fields, others require to select data directly tied to database entries, and some cannot even be filled manually and require bulk ingestion. 
+When using applications, we seldom encounter a situation where we need to provide massive amounts of data. Even long forms can be filled in less than a hour by hand. Regular users don't even have that much information to provide at once, but how do companies end up millions, if not billions of data about their users? Well, they collect them over time by smaller bits until the whole data set grows large.
 
-I wrote this piece of article with the motivation of documenting my design choices and the engineering challenges I've faced.
+As of today, *Whatsapp* has *~3.0 to 3.5 billion monthly active users worldwide*, which is massive. What if each one of them was sending at least one message every day. This would represent a colossal amount of data. Could you load all this data at once in the database without the process taking weeks or months? This is the problem many companies face.
 
-# Constraints & Decisions
+We live in the era of data. Online activities generate a massive amount of bytes, even real life data is tracked and converted in digital formats. Data enables us to do many things like training AI models, making predictions and discovering hidden trends and correlations. No wonder then that over time, the need to transfer large data sets across systems became a serious thing.
 
-## Server Setup
+From first principles, what does it mean to transfer data? It just means moving bytes in system A to system B. It becomes obvious that like in real life, we are fundamentally constrained by the amount of bytes, the bandwidth and the latency between the systems. But just copying bytes is not enough, different systems might expect different formats and even enforce integrity rules. Making sure that all incoming data is correct requires work and thus, adds up some latency.
 
-We run the platform on a Debian server with the following specs:
-- CPU: Intel Core (Haswell, no TSX) at 2.99 GHz and 4 cores
-- RAM: 8GB
-- Storage: 74GiB of HDD
+This is the problem we will examine in this article, as I show you how I built a data ingestion pipeline for our system.
 
-This setup is quite modest, but the goal is to make a quality platform for a small amount of users with a limited budget. This sounds feasible to me if we make the right decisions. The scarcest resource we have here is RAM and especially storage space.
+## A starting point
 
-## Technological Stack
+Our platform is built in Django and uses a PostgreSQL database. We have to find a way to let third party users load massive data into our system without knowing too much about our architecture and implementation.
 
-- Django
-- Redis
-- Celery
-- Prometheus
-- Loki
-- Grafana
-- PostgreSQL
-- Docker
+A good starting point is to define a common data format. There are plenty of data formats that exist, like: *json*, *yaml*, *excel*, *csv*, *raw text*, etc. But they are not all equally suited for all data ingestion use cases. For instance, *json* is relatively expensive to parse, *yaml* is hard to read when there is too much data, *excel* sheets contain extra metadata and format specific details that can make parsing heavy, *raw text* is simple but without structure, it is easy to mess up things.
+
+An excellent candidate would be *csv*. It offers us a structure that closely matches that of actual database tables and excel sheets without the extra overhead. It is also human readable.
+
+So, this is how our system will look like:
+
+(Cotton Society Database) --- *csv* --> (Our Pipeline) --> (Our Database)
+
+In short, the agents from the cotton societies will export their data in a csv file that will then be uploaded on our platform and processed before being saved in our database. The part that actually matters to us starts at the uploading phase.
+
+### Designing the pipeline
+
+Before jumping to the design of the platform pipeline, we need to examine the problem at its bare form.
+We have: A *csv* file, a *processing* step, and a *database* storage step. For the purpose of this case study, I ran some benchmarks with *Python 3.14.6*:
+
+| Size       | Rows      | File I/O     | I/O throughput | CSV Parse    | Parse throughput |
+| ---------- | --------- | ------------ | -------------- | ------------ | ---------------- |
+| **1 KB**   | 22        | **0.005 ms** | 180 MB/s       | **0.031 ms** | 702,534 rows/s   |
+| **10 KB**  | 232       | **0.005 ms** | 2,155 MB/s     | **0.165 ms** | 1,407,135 rows/s |
+| **100 KB** | 2,326     | **0.059 ms** | 1,743 MB/s     | **1.67 ms**  | 1,390,891 rows/s |
+| **1 MB**   | 23,830    | **0.170 ms** | 6,470 MB/s     | **19.2 ms**  | 1,240,823 rows/s |
+| **10 MB**  | 238,312   | **2.91 ms**  | 3,941 MB/s     | **198 ms**   | 1,205,465 rows/s |
+| **100 MB** | 2,383,126 | **52.7 ms**  | 2,264 MB/s     | **2,320 ms** | 1,027,348 rows/s |
+
+CPU: Intel(R) Core(TM) i7-8565U (8) @ 4.60 GHz
+GPU: Intel UHD Graphics 620 @ 1.15 GHz
+Memory: 16GB
+
+We can observe that reading large csv files is relatively cheap, the true cost happens at parse time. It means that loading and parsing 2 millions of rows in python takes roughly 2 seconds. Not bad. But what about writing that same data to a database? Let's give it a try:
+
+| File size | Rows      | Batch 1 (row-by-row) | Batch 10     | Batch 100    | Batch 1,000  | Batch 10,000 | Batch 100,000 |
+| --------- | --------- | -------------------- | ------------ | ------------ | ------------ | ------------ | ------------- |
+| **1KB**   | 22        | 98.43 ms             | 393.66 ms    | —            | —            | —            | —             |
+| **10KB**  | 232       | 1,069.96 ms          | 641.68 ms    | 1,536.91 ms  | —            | —            | —             |
+| **100KB** | 2,326     | 413.14 ms            | 286.25 ms    | 805.44 ms    | 841.14 ms    | —            | —             |
+| **1MB**   | 23,830    | 4,088.48 ms          | 2,325.35 ms  | 3,567.57 ms  | 3,861.63 ms  | 4,441.70 ms  | —             |
+| **10MB**  | 238,312   | 26,146.34 ms         | 7,813.70 ms  | 3,711.49 ms  | 3,659.43 ms  | 3,505.75 ms  | 3,673.33 ms   |
+| **100MB** | 2,383,126 | 425,754.07 ms        | 99,521.69 ms | 68,306.64 ms | 87,310.71 ms | 57,109.26 ms | 35,829.49 ms  |
+
+These are insane numbers. We can see that loading data in the database is much slower than parsing. Different loading patterns also have different performance. The most blatant example is the *row by row* insertion. The performance is terrible because we make new round trips for each row, which adds overhead. Of course this is not the recommended approach, instead, whenever you have a non trivial amount of rows, use batch inserts instead. But larger batch sizes are not necessarily better. It is up to you to measure and run benchmarks to find the optimal batch size.
+
+Loading 2 millions of rows with a batch size of 100 thousand takes 35 seconds. Can we go faster? Let's try a trick:
+
+| Method                  | Time    | Rows/s  | MB/s |
+| ----------------------- | ------- | ------- | ---- |
+| **COPY FROM file**      | 12.37 s | 192,593 | 9.6  |
+| **COPY FROM buffer**    | 15.26 s | 156,160 | 7.8  |
+| **Batch INSERT (100K)** | 35.83 s | 66,522  | —    |
+We nearly halved the loading time!
 
 
-The platform is not designed for massive usage at scale, it is no social media with thousands of interactions per short amount of time. Rather it is a professional platform designed only for a few stakeholders that will use it to collect data and generate statistics and reports occasionally. Which means that using React and Django is not a bad choice, especially if we want to leverage the dynamic nature of Django and *python magic*
-
-## Design & Implementation
-
-Before diving into the design, let's try to visualize the actual usage pattern.
-
-Among the *organisms*, that is, those who will fill the forms, we have cotton societies: SOFITEX, FASO COTON and SOCOMA. 
-They could each access the platform through 10 representative users, called *agents*.
-We also have special organisms like FILSAH, SECOBIO, UNPCB, TRITURATION and INERA, that could also have 10 users each (even though they will be less numerous in practice). 
-Which gives us a safe upper bound of 80 concurrent users on the data collection side. As for the analytics and administration side, we can safely assume it will have at most 10 concurrent users too, but let's round up to 20 in order to prepare the platform for 100 concurrent users.
-
-8GB of RAM and 4 cores at roughly 3 GHz for 100 concurrent users sounds more than enough. The platform is closed by default and requires authentication. Rate limiting can also protect the server. 
-
-Regarding the usage pattern, the vast majority of users will be agents that will fill in forms in random fashion. They can log in every day to make small progress, they can also log in a few times to fill lots of data, who knows. They can also log in to review already provided data and make corrections. It is up the agents of the same organisms to find a work schedule and organization that suits them best. The heaviest operation will be csv uploading and ingestion. Each agent of cotton society and SECOBIO will eventually upload large csv files multiple times. Which means we have a write heavy application in terms of sheer amount of data. Not only to mention that data from previous campaigns (before the development of the platform) will have to be imported in the platform, which means, the platform must support archive data imports.
-
-
-### Implementation CSV Ingestion Pipeline
-
-This wasn't the most complex aspect of the system, but it still had interesting problems. As someone that loves reasoning about performance, this was probably my favorite technical challenge.
-
-The need for a csv ingestion pipeline comes from the fact that some data is way to numerous to be filled in manually, we needed an interface to allow the agents to upload files in a requested format and then load them into our database.
-
-The flow is as follows:
-- Agent picks a csv file and submits to the *Granular Form*.
-- Server receives the file and streams it in memory.
-- Server parses the contents and validates each row (only simple data type checking).
-- Servers creates batches and submits them for bulk upserts in the database.
-
-The platform doesn't need to be a hyper performing ingestion engine, capable of processing millions of rows in a few seconds, but we still need to keep reasonable throughput, especially as we use slow languages like python.
+## Real system benchmarks
 
 Here is an example measurement of one of our first ingestion processes we had with 20 K chunk size:
 
@@ -153,3 +159,9 @@ Here are the results for the same data set and *5000 batch_size*:
 | **Total pipeline time**              | **4,478.7 ms (4.48 s)** |
 
 We went from *11.5 s to 4.5 s* which is a huge gain! The larger data set of 170 K rows completed in *33 seconds*. Is it fast enough now? Remember that the platform is designed for 100 concurrent users. Most of them will be filling forms, and only a quarter of them require csv uploading. At minimum, we will have roughly *25 x 4 = 100* csv uploads assuming no errors and re-uploads will occur. The aforementioned 170 K rows come from an actual real potential data set from the biggest cotton society, which means that a single csv upload won't take more than a minute for sure. Furthermore, the agent can scroll past the ongoing uploading and take care of other forms (and upload other files). The async nature makes the waiting bearable, especially when they have an entire year to collect their own data and fill our forms.
+
+Now we have to consider the UX when multiple agents are using our platform concurrently.
+
+### Takeaway
+
+An important thing is to realize that what can be considered as a large data set can vary depending on the context. One million of rows might sound big to you, but the average consumer desktop can load and parse them in a quick amount of time.
